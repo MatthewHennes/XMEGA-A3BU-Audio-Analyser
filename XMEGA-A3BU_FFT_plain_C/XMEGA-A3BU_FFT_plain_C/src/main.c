@@ -29,10 +29,11 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #include <asf.h>
+#include <fhtConfig.h>
 
 #define MY_ADC    ADCA
 #define MY_ADC_CH ADC_CH0
-#define SAMPLE_SIZE 200
+#define SAMPLE_SIZE 256
 
 static void adc_init(void);
 
@@ -46,34 +47,23 @@ int main (void)
 	
 
 	// Insert application code here, after the board has been initialized.
-	static  int ADC_result;
-	static  int ADC_results[SAMPLE_SIZE];
+	static  int16_t ADC_results[SAMPLE_SIZE];
 	static int i = 0;
-// 	static int mean = 0;
-// 	static int count = 1;
-// 	static int double_count = 0;
 		
 	adc_enable(&MY_ADC);
 
-	while(true)
-	{
-		adc_start_conversion(&MY_ADC, MY_ADC_CH);
-// 		adc_wait_for_interrupt_flag(&MY_ADC, MY_ADC_CH);
-		ADC_result = adc_get_result(&MY_ADC, MY_ADC_CH);
-		ADC_results[i] = ADC_result;
-// 		unsigned int running_total = 0;
-// 		for (int j = 0; j < 100; j++)
-// 		{
-// 			running_total += ADC_results[j];
-// 		}
-// 		mean = running_total / 100;
-		i++;
-// 		count++;
-// 		if (count == 0)
-// 			double_count++;
-		if (i == SAMPLE_SIZE)
-			i = 0;
-	}
+// 	while(true)
+// 	{
+		while (i < SAMPLE_SIZE)
+		{
+			ADC_results[i] = adc_get_result(&MY_ADC, MY_ADC_CH);
+			i++;
+		}
+		applyHannWindow(ADC_results);
+		fhtDitInt(ADC_results);
+		complexToDecibel(ADC_results);
+		i = 0;
+// 	}
 }
 
 static void adc_init(void)

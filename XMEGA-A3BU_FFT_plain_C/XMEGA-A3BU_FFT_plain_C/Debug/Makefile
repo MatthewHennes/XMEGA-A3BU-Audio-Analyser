@@ -69,12 +69,18 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../src/ASF/xmega/drivers/adc/adc.c \
+../src/complexToDecibel.c \
+../src/complexToReal.c \
+../src/fhtDebug.c \
+../src/windowing.c \
 ../src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.c \
 ../src/ASF/common/services/sleepmgr/xmega/sleepmgr.c \
 ../src/ASF/common/services/clock/xmega/sysclk.c \
 ../src/ASF/xmega/drivers/nvm/nvm.c \
 ../src/ASF/common/services/ioport/xmega/ioport_compat.c \
 ../src/ASF/xmega/boards/xmega_a3bu_xplained/init.c \
+../src/fht.c \
+../src/generateTables.c \
 ../src/main.c
 
 
@@ -88,6 +94,10 @@ ASM_SRCS +=
 
 OBJS +=  \
 src/ASF/xmega/drivers/adc/adc.o \
+src/complexToDecibel.o \
+src/complexToReal.o \
+src/fhtDebug.o \
+src/windowing.o \
 src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.o \
 src/ASF/common/services/sleepmgr/xmega/sleepmgr.o \
 src/ASF/common/services/clock/xmega/sysclk.o \
@@ -96,10 +106,16 @@ src/ASF/xmega/drivers/nvm/nvm_asm.o \
 src/ASF/xmega/drivers/cpu/ccp.o \
 src/ASF/common/services/ioport/xmega/ioport_compat.o \
 src/ASF/xmega/boards/xmega_a3bu_xplained/init.o \
+src/fht.o \
+src/generateTables.o \
 src/main.o
 
 OBJS_AS_ARGS +=  \
 src/ASF/xmega/drivers/adc/adc.o \
+src/complexToDecibel.o \
+src/complexToReal.o \
+src/fhtDebug.o \
+src/windowing.o \
 src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.o \
 src/ASF/common/services/sleepmgr/xmega/sleepmgr.o \
 src/ASF/common/services/clock/xmega/sysclk.o \
@@ -108,10 +124,16 @@ src/ASF/xmega/drivers/nvm/nvm_asm.o \
 src/ASF/xmega/drivers/cpu/ccp.o \
 src/ASF/common/services/ioport/xmega/ioport_compat.o \
 src/ASF/xmega/boards/xmega_a3bu_xplained/init.o \
+src/fht.o \
+src/generateTables.o \
 src/main.o
 
 C_DEPS +=  \
 src/ASF/xmega/drivers/adc/adc.d \
+src/complexToDecibel.d \
+src/complexToReal.d \
+src/fhtDebug.d \
+src/windowing.d \
 src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.d \
 src/ASF/common/services/sleepmgr/xmega/sleepmgr.d \
 src/ASF/common/services/clock/xmega/sysclk.d \
@@ -120,10 +142,16 @@ src/ASF/xmega/drivers/nvm/nvm_asm.d \
 src/ASF/xmega/drivers/cpu/ccp.d \
 src/ASF/common/services/ioport/xmega/ioport_compat.d \
 src/ASF/xmega/boards/xmega_a3bu_xplained/init.d \
+src/fht.d \
+src/generateTables.d \
 src/main.d
 
 C_DEPS_AS_ARGS +=  \
 src/ASF/xmega/drivers/adc/adc.d \
+src/complexToDecibel.d \
+src/complexToReal.d \
+src/fhtDebug.d \
+src/windowing.d \
 src/ASF/xmega/drivers/adc/xmega_aau/adc_aau.d \
 src/ASF/common/services/sleepmgr/xmega/sleepmgr.d \
 src/ASF/common/services/clock/xmega/sysclk.d \
@@ -132,6 +160,8 @@ src/ASF/xmega/drivers/nvm/nvm_asm.d \
 src/ASF/xmega/drivers/cpu/ccp.d \
 src/ASF/common/services/ioport/xmega/ioport_compat.d \
 src/ASF/xmega/boards/xmega_a3bu_xplained/init.d \
+src/fht.d \
+src/generateTables.d \
 src/main.d
 
 OUTPUT_FILE_PATH +=XMEGA-A3BU_FFT_plain_C.elf
@@ -165,7 +195,26 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 src/ASF/xmega/drivers/adc/%.o: ../src/ASF/xmega/drivers/adc/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)E:\Programs\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -DDEBUG -DCONFIG_NVM_IGNORE_XMEGA_A3_D3_REVB_ERRATA -DBOARD=XMEGA_A3BU_XPLAINED -DIOPORT_XMEGA_COMPAT  -I"../common/applications/user_application/atxmega256a3bu_xmega_a3bu_xplained/config" -I"../src/ASF/xmega/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/xmega/boards" -I"../src/ASF/xmega/boards/xmega_a3bu_xplained" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/common/utils" -I"../src/ASF/common/services/ioport" -I"../src" -I"../src/ASF/common/services/gpio" -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc"  -O1 -fdata-sections -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g3 -Wall -mmcu=atxmega256a3bu -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/%.o: ../src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)E:\Programs\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -DDEBUG -DCONFIG_NVM_IGNORE_XMEGA_A3_D3_REVB_ERRATA -DBOARD=XMEGA_A3BU_XPLAINED -DIOPORT_XMEGA_COMPAT  -I"../common/applications/user_application/atxmega256a3bu_xmega_a3bu_xplained/config" -I"../src/ASF/xmega/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/xmega/boards" -I"../src/ASF/xmega/boards/xmega_a3bu_xplained" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/common/utils" -I"../src/ASF/common/services/ioport" -I"../src" -I"../src/ASF/common/services/gpio" -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc"  -O1 -fdata-sections -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g3 -Wall -mmcu=atxmega256a3bu -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
@@ -208,13 +257,6 @@ src/ASF/common/services/ioport/xmega/%.o: ../src/ASF/common/services/ioport/xmeg
 	
 
 src/ASF/xmega/boards/xmega_a3bu_xplained/%.o: ../src/ASF/xmega/boards/xmega_a3bu_xplained/%.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 4.8.1
-	$(QUOTE)E:\Programs\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -DDEBUG -DCONFIG_NVM_IGNORE_XMEGA_A3_D3_REVB_ERRATA -DBOARD=XMEGA_A3BU_XPLAINED -DIOPORT_XMEGA_COMPAT  -I"../common/applications/user_application/atxmega256a3bu_xmega_a3bu_xplained/config" -I"../src/ASF/xmega/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/xmega/boards" -I"../src/ASF/xmega/boards/xmega_a3bu_xplained" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/common/utils" -I"../src/ASF/common/services/ioport" -I"../src" -I"../src/ASF/common/services/gpio" -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc"  -O1 -fdata-sections -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g3 -Wall -mmcu=atxmega256a3bu -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/%.o: ../src/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)E:\Programs\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -DDEBUG -DCONFIG_NVM_IGNORE_XMEGA_A3_D3_REVB_ERRATA -DBOARD=XMEGA_A3BU_XPLAINED -DIOPORT_XMEGA_COMPAT  -I"../common/applications/user_application/atxmega256a3bu_xmega_a3bu_xplained/config" -I"../src/ASF/xmega/utils" -I"../src/config" -I"../src/ASF/common/boards" -I"../src/ASF/xmega/boards" -I"../src/ASF/xmega/boards/xmega_a3bu_xplained" -I"../src/ASF/xmega/utils/preprocessor" -I"../src/ASF/common/utils" -I"../src/ASF/common/services/ioport" -I"../src" -I"../src/ASF/common/services/gpio" -I"../src/ASF/xmega/drivers/cpu" -I"../src/ASF/xmega/drivers/nvm" -I"../src/ASF/xmega/drivers/pmic" -I"../src/ASF/xmega/drivers/sleep" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/xmega/drivers/adc"  -O1 -fdata-sections -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g3 -Wall -mmcu=atxmega256a3bu -c -std=gnu99 -fno-strict-aliasing -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -mrelax -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
