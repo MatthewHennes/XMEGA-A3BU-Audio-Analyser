@@ -11,7 +11,7 @@
 static void adc_init(void);
 void take_sample(void);
 
-// hack! I think these should be inside main, but I cannot figure out how to pass them to take_sample(), so I just stuck them here for now
+//hack! I think these should be inside main, but I cannot figure out how to pass them to take_sample(), so I just stuck them here for now
 static int16_t ADC_results[SAMPLE_SIZE];
 static int samples_taken = 0;
 
@@ -25,11 +25,11 @@ int main (void)
 
 	adc_enable(&LEFT_AUDIO_IN);
 	
-	//Set up a timer to call take_sample() every 338 cycles or (about) 45µs
+	//Set up a timer to call take_sample() every 1,440 cycles or (about) 45µs
 	tc_enable(&TCC0);
 	tc_set_overflow_interrupt_callback(&TCC0, take_sample);
 	tc_set_wgm(&TCC0, TC_WG_NORMAL);
-	tc_write_period(&TCC0, 338);
+	tc_write_period(&TCC0, 1440);
 	tc_set_overflow_interrupt_level(&TCC0, TC_INT_LVL_LO);
 	cpu_irq_enable();
 	tc_write_clock_source(&TCC0, TC_CLKSEL_DIV1_gc);
@@ -58,7 +58,7 @@ int main (void)
 		else
 		{
 			int bass_sum = 0;
-			for (int i = 0; i < 10; i++)
+			for (int i = 1; i < 10; i++)
 				bass_sum += FHT_results[i];
 			if (bass_sum > 10)
 				bass = true;
