@@ -4,6 +4,8 @@
 
 src\ASF\xmega\drivers\adc\adc.c
 
+src\ASF\xmega\drivers\tc\tc.c
+
 src\complexToDecibel.c
 
 src\complexToReal.c
