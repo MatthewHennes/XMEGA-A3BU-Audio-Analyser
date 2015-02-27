@@ -8,9 +8,9 @@
 #define MID_LED IOPORT_CREATE_PIN(PORTC, 6)
 #define TREBLE_LED IOPORT_CREATE_PIN(PORTB, 1)
 #define TRANSFORMING_LED IOPORT_CREATE_PIN(PORTR, 1)
-#define BASS_THRESHHOLD 5 //about 250Hz
-#define TREBLE_THRESHHOLD 40 //about 1600Hz
-#define SIGNAL_THRESHHOLD 25
+#define BASS_THRESHOLD 6 //about 250Hz
+#define TREBLE_THRESHOLD 25 //about 1000Hz
+#define SIGNAL_THRESHOLD 25
 
 static void adc_init(void);
 static void take_sample(void);
@@ -71,25 +71,25 @@ int main (void)
 			int treble_sum = 0;
 			
 			//Activate LED when bass is playing
-			for (int i = 1; i < BASS_THRESHHOLD; i++)
+			for (int i = 1; i < BASS_THRESHOLD; i++)
 				bass_sum += FHT_results[i];
-			if (bass_sum > SIGNAL_THRESHHOLD)
+			if (bass_sum > SIGNAL_THRESHOLD)
 				bass = true;
 			else
 				bass = false;
 				
 			//Activate LED when mid is playing
-			for (int i = BASS_THRESHHOLD; i < TREBLE_THRESHHOLD; i++)
+			for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
 				mid_sum += FHT_results[i];
-			if (mid_sum > SIGNAL_THRESHHOLD)
+			if (mid_sum > SIGNAL_THRESHOLD)
 				mid = true;
 			else
 				mid = false;
 			
 			//Activate LED when treble is playing (for now, more like mids. True treble seems to almost never activate)
-			for (int i = TREBLE_THRESHHOLD; i < SAMPLE_SIZE / 2; i++)
+			for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
 				treble_sum += FHT_results[i];
-			if (treble_sum > SIGNAL_THRESHHOLD)
+			if (treble_sum > SIGNAL_THRESHOLD)
 				treble = true;
 			else
 				treble = false;
