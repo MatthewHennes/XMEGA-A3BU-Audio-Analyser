@@ -1652,7 +1652,6 @@ END GROUP
                 0x00001b2e                fhtDitInt
  .text.take_sample
                 0x0000204c       0x2a src/main.o
-                0x0000204c                take_sample
  .text.main     0x00002076      0x166 src/main.o
                 0x00002076                main
  .text.libgcc.mul
@@ -1919,7 +1918,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x6c81
+.debug_info     0x00000000     0x6c80
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0xaad src/ASF/xmega/drivers/adc/adc.o
  .debug_info    0x00000aad     0x1943 src/ASF/xmega/drivers/tc/tc.o
@@ -1933,9 +1932,9 @@ END GROUP
  .debug_info    0x00004153      0x11d src/ASF/common/services/ioport/xmega/ioport_compat.o
  .debug_info    0x00004270      0xa6d src/ASF/xmega/boards/xmega_a3bu_xplained/init.o
  .debug_info    0x00004cdd      0x1c1 src/fht.o
- .debug_info    0x00004e9e     0x1de3 src/main.o
+ .debug_info    0x00004e9e     0x1de2 src/main.o
 
-.debug_abbrev   0x00000000     0x13a9
+.debug_abbrev   0x00000000     0x13a7
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x2b9 src/ASF/xmega/drivers/adc/adc.o
  .debug_abbrev  0x000002b9      0x2a7 src/ASF/xmega/drivers/tc/tc.o
@@ -1949,7 +1948,7 @@ END GROUP
  .debug_abbrev  0x00000d41       0x93 src/ASF/common/services/ioport/xmega/ioport_compat.o
  .debug_abbrev  0x00000dd4      0x160 src/ASF/xmega/boards/xmega_a3bu_xplained/init.o
  .debug_abbrev  0x00000f34       0xc3 src/fht.o
- .debug_abbrev  0x00000ff7      0x3b2 src/main.o
+ .debug_abbrev  0x00000ff7      0x3b0 src/main.o
 
 .debug_line     0x00000000     0x46f7
  *(.debug_line .debug_line.* .debug_line_end)

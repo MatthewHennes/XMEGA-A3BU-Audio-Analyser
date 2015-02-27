@@ -9,7 +9,7 @@
 #define TRANSFORMING_LED IOPORT_CREATE_PIN(PORTR, 1)
 
 static void adc_init(void);
-void take_sample(void);
+static void take_sample(void);
 
 //hack! I think these should be inside main, but I cannot figure out how to pass them to take_sample(), so I just stuck them here for now
 static int16_t ADC_results[SAMPLE_SIZE];
@@ -70,7 +70,7 @@ int main (void)
 }
 
 //hack! I am using static variables defined outside of main, which seems very sketchy, but I could not figure out how to pass argumets to this function, so I just did that...
-void take_sample(void)
+static void take_sample(void)
 {
 	ADC_results[samples_taken] = adc_get_result(&LEFT_AUDIO_IN, LEFT_AUDIO_IN_CHANNEL);
 	samples_taken++;
