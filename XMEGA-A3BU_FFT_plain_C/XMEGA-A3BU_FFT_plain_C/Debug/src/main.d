@@ -55,8 +55,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/xmega/drivers/tc/tc.h ../src/ASF/xmega/utils/status_codes.h \
  ../src/ASF/xmega/boards/xmega_a3bu_xplained/led.h ../src/fhtConfig.h \
  ../src/fhtLibraryVersion.h ../src/windowing.h ../src/fht.h \
- ../src/complexToReal.h ../src/complexToDecibel.h ../src/fhtDebug.h \
- e:\programs\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\math.h
+ ../src/complexToReal.h ../src/complexToDecibel.h ../src/fhtDebug.h
 
 ../src/asf.h:
 
@@ -193,5 +192,3 @@ e:\programs\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\in
 ../src/complexToDecibel.h:
 
 ../src/fhtDebug.h:
-
-e:\programs\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\math.h:
