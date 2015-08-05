@@ -3,31 +3,31 @@ XMEGA-A3BU_FFT_plain_C.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000242a  00000000  00000000  00000094  2**1
+  0 .text         00002466  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000020  00802000  0000242a  000024be  2**0
+  1 .data         00000020  00802000  00002466  000024fa  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          0000065c  00802020  00802020  000024de  2**0
+  2 .bss          00000656  00802020  00802020  0000251a  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000024de  2**0
+  3 .comment      00000030  00000000  00000000  0000251a  2**0
                   CONTENTS, READONLY
-  4 .debug_aranges 000003b0  00000000  00000000  00002510  2**3
+  4 .debug_aranges 000003b8  00000000  00000000  00002550  2**3
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00007229  00000000  00000000  000028c0  2**0
+  5 .debug_info   0000718e  00000000  00000000  00002908  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000013c5  00000000  00000000  00009ae9  2**0
+  6 .debug_abbrev 00001407  00000000  00000000  00009a96  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00004870  00000000  00000000  0000aeae  2**0
+  7 .debug_line   000047e5  00000000  00000000  0000ae9d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00001424  00000000  00000000  0000f720  2**2
+  8 .debug_frame  00001434  00000000  00000000  0000f684  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0002b1ad  00000000  00000000  00010b44  2**0
+  9 .debug_str    0002b0ac  00000000  00000000  00010ab8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000411e  00000000  00000000  0003bcf1  2**0
+ 10 .debug_loc    00004117  00000000  00000000  0003bb64  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000340  00000000  00000000  0003fe10  2**3
+ 11 .debug_ranges 00000360  00000000  00000000  0003fc80  2**3
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  0000a93b  00000000  00000000  00040150  2**0
+ 12 .debug_macro  0000a91d  00000000  00000000  0003ffe0  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -355,7 +355,7 @@ Disassembly of section .text:
      38c:	10 e2       	ldi	r17, 0x20	; 32
      38e:	a0 e0       	ldi	r26, 0x00	; 0
      390:	b0 e2       	ldi	r27, 0x20	; 32
-     392:	ea e2       	ldi	r30, 0x2A	; 42
+     392:	e6 e6       	ldi	r30, 0x66	; 102
      394:	f4 e2       	ldi	r31, 0x24	; 36
      396:	00 e0       	ldi	r16, 0x00	; 0
      398:	0b bf       	out	0x3b, r16	; 59
@@ -376,11 +376,11 @@ Disassembly of section .text:
      3ae:	1d 92       	st	X+, r1
 
 000003b0 <.do_clear_bss_start>:
-     3b0:	ac 37       	cpi	r26, 0x7C	; 124
+     3b0:	a6 37       	cpi	r26, 0x76	; 118
      3b2:	b2 07       	cpc	r27, r18
      3b4:	e1 f7       	brne	.-8      	; 0x3ae <.do_clear_bss_loop>
-     3b6:	0e 94 49 10 	call	0x2092	; 0x2092 <main>
-     3ba:	0c 94 13 12 	jmp	0x2426	; 0x2426 <_exit>
+     3b6:	0e 94 74 10 	call	0x20e8	; 0x20e8 <main>
+     3ba:	0c 94 31 12 	jmp	0x2462	; 0x2462 <_exit>
 
 000003be <__bad_interrupt>:
      3be:	20 ce       	rjmp	.-960    	; 0x0 <__vectors>
@@ -526,7 +526,7 @@ static inline irqflags_t cpu_irq_save(void)
 	flags = cpu_irq_save();
 
 	++sleepmgr_locks[mode];
-     45a:	e7 e7       	ldi	r30, 0x77	; 119
+     45a:	e1 e7       	ldi	r30, 0x71	; 113
      45c:	f6 e2       	ldi	r31, 0x26	; 38
      45e:	90 81       	ld	r25, Z
      460:	9f 5f       	subi	r25, 0xFF	; 255
@@ -2259,7 +2259,7 @@ static inline void cpu_irq_restore(irqflags_t flags)
     11ba:	09 c0       	rjmp	.+18     	; 0x11ce <tc_enable+0xb8>
     11bc:	8f b7       	in	r24, 0x3f	; 63
     11be:	f8 94       	cli
-    11c0:	e7 e7       	ldi	r30, 0x77	; 119
+    11c0:	e1 e7       	ldi	r30, 0x71	; 113
     11c2:	f6 e2       	ldi	r31, 0x26	; 38
     11c4:	90 81       	ld	r25, Z
     11c6:	9f 5f       	subi	r25, 0xFF	; 255
@@ -2431,13 +2431,13 @@ void complexToDecibelWithGain(int16_t *fx)
 		// calc = (fx(k)^2) + (fx(-k)^2)
 		calc = ((int32_t)fx[k] * (int32_t)fx[k] +
     12a4:	9d 01       	movw	r18, r26
-    12a6:	0e 94 ee 11 	call	0x23dc	; 0x23dc <__mulhisi3>
+    12a6:	0e 94 0c 12 	call	0x2418	; 0x2418 <__mulhisi3>
     12aa:	2b 01       	movw	r4, r22
     12ac:	3c 01       	movw	r6, r24
 		(int32_t)fx[FHT_LEN - k] * (int32_t)fx[FHT_LEN - k]);
     12ae:	95 01       	movw	r18, r10
     12b0:	d5 01       	movw	r26, r10
-    12b2:	0e 94 ee 11 	call	0x23dc	; 0x23dc <__mulhisi3>
+    12b2:	0e 94 0c 12 	call	0x2418	; 0x2418 <__mulhisi3>
 	int32_t calc;
 
 	for (k = 0; k < FHT_LEN / 2; k++)
@@ -2629,7 +2629,7 @@ void applyHannWindow(int16_t *fx)
     138c:	f7 01       	movw	r30, r14
     138e:	a0 81       	ld	r26, Z
     1390:	b1 81       	ldd	r27, Z+1	; 0x01
-    1392:	0e 94 03 12 	call	0x2406	; 0x2406 <__usmulhisi3>
+    1392:	0e 94 21 12 	call	0x2442	; 0x2442 <__usmulhisi3>
     1396:	ab 01       	movw	r20, r22
     1398:	bc 01       	movw	r22, r24
     139a:	03 2e       	mov	r0, r19
@@ -2676,7 +2676,7 @@ void applyHannWindow(int16_t *fx)
     13d2:	f8 01       	movw	r30, r16
     13d4:	a0 81       	ld	r26, Z
     13d6:	b1 81       	ldd	r27, Z+1	; 0x01
-    13d8:	0e 94 03 12 	call	0x2406	; 0x2406 <__usmulhisi3>
+    13d8:	0e 94 21 12 	call	0x2442	; 0x2442 <__usmulhisi3>
     13dc:	ab 01       	movw	r20, r22
     13de:	bc 01       	movw	r22, r24
     13e0:	03 2e       	mov	r0, r19
@@ -2749,8 +2749,8 @@ ISR(ADCA_CH0_vect)
     143a:	f2 e0       	ldi	r31, 0x02	; 2
     143c:	44 a1       	ldd	r20, Z+36	; 0x24
     143e:	55 a1       	ldd	r21, Z+37	; 0x25
-    1440:	e0 91 74 26 	lds	r30, 0x2674
-    1444:	f0 91 75 26 	lds	r31, 0x2675
+    1440:	e0 91 6e 26 	lds	r30, 0x266E
+    1444:	f0 91 6f 26 	lds	r31, 0x266F
     1448:	61 e0       	ldi	r22, 0x01	; 1
     144a:	80 e0       	ldi	r24, 0x00	; 0
     144c:	92 e0       	ldi	r25, 0x02	; 2
@@ -2807,8 +2807,8 @@ ISR(ADCA_CH1_vect)
     149e:	f2 e0       	ldi	r31, 0x02	; 2
     14a0:	44 81       	ldd	r20, Z+4	; 0x04
     14a2:	55 81       	ldd	r21, Z+5	; 0x05
-    14a4:	e0 91 74 26 	lds	r30, 0x2674
-    14a8:	f0 91 75 26 	lds	r31, 0x2675
+    14a4:	e0 91 6e 26 	lds	r30, 0x266E
+    14a8:	f0 91 6f 26 	lds	r31, 0x266F
     14ac:	62 e0       	ldi	r22, 0x02	; 2
     14ae:	80 e0       	ldi	r24, 0x00	; 0
     14b0:	92 e0       	ldi	r25, 0x02	; 2
@@ -2865,8 +2865,8 @@ ISR(ADCA_CH2_vect)
     1502:	f2 e0       	ldi	r31, 0x02	; 2
     1504:	44 81       	ldd	r20, Z+4	; 0x04
     1506:	55 81       	ldd	r21, Z+5	; 0x05
-    1508:	e0 91 74 26 	lds	r30, 0x2674
-    150c:	f0 91 75 26 	lds	r31, 0x2675
+    1508:	e0 91 6e 26 	lds	r30, 0x266E
+    150c:	f0 91 6f 26 	lds	r31, 0x266F
     1510:	64 e0       	ldi	r22, 0x04	; 4
     1512:	80 e0       	ldi	r24, 0x00	; 0
     1514:	92 e0       	ldi	r25, 0x02	; 2
@@ -2923,8 +2923,8 @@ ISR(ADCA_CH3_vect)
     1566:	f2 e0       	ldi	r31, 0x02	; 2
     1568:	44 81       	ldd	r20, Z+4	; 0x04
     156a:	55 81       	ldd	r21, Z+5	; 0x05
-    156c:	e0 91 74 26 	lds	r30, 0x2674
-    1570:	f0 91 75 26 	lds	r31, 0x2675
+    156c:	e0 91 6e 26 	lds	r30, 0x266E
+    1570:	f0 91 6f 26 	lds	r31, 0x266F
     1574:	68 e0       	ldi	r22, 0x08	; 8
     1576:	80 e0       	ldi	r24, 0x00	; 0
     1578:	92 e0       	ldi	r25, 0x02	; 2
@@ -2981,8 +2981,8 @@ ISR(ADCB_CH0_vect)
     15ca:	f2 e0       	ldi	r31, 0x02	; 2
     15cc:	44 a1       	ldd	r20, Z+36	; 0x24
     15ce:	55 a1       	ldd	r21, Z+37	; 0x25
-    15d0:	e0 91 72 26 	lds	r30, 0x2672
-    15d4:	f0 91 73 26 	lds	r31, 0x2673
+    15d0:	e0 91 6c 26 	lds	r30, 0x266C
+    15d4:	f0 91 6d 26 	lds	r31, 0x266D
     15d8:	61 e0       	ldi	r22, 0x01	; 1
     15da:	80 e4       	ldi	r24, 0x40	; 64
     15dc:	92 e0       	ldi	r25, 0x02	; 2
@@ -3039,8 +3039,8 @@ ISR(ADCB_CH1_vect)
     162e:	f2 e0       	ldi	r31, 0x02	; 2
     1630:	44 81       	ldd	r20, Z+4	; 0x04
     1632:	55 81       	ldd	r21, Z+5	; 0x05
-    1634:	e0 91 72 26 	lds	r30, 0x2672
-    1638:	f0 91 73 26 	lds	r31, 0x2673
+    1634:	e0 91 6c 26 	lds	r30, 0x266C
+    1638:	f0 91 6d 26 	lds	r31, 0x266D
     163c:	62 e0       	ldi	r22, 0x02	; 2
     163e:	80 e4       	ldi	r24, 0x40	; 64
     1640:	92 e0       	ldi	r25, 0x02	; 2
@@ -3097,8 +3097,8 @@ ISR(ADCB_CH2_vect)
     1692:	f2 e0       	ldi	r31, 0x02	; 2
     1694:	44 81       	ldd	r20, Z+4	; 0x04
     1696:	55 81       	ldd	r21, Z+5	; 0x05
-    1698:	e0 91 72 26 	lds	r30, 0x2672
-    169c:	f0 91 73 26 	lds	r31, 0x2673
+    1698:	e0 91 6c 26 	lds	r30, 0x266C
+    169c:	f0 91 6d 26 	lds	r31, 0x266D
     16a0:	64 e0       	ldi	r22, 0x04	; 4
     16a2:	80 e4       	ldi	r24, 0x40	; 64
     16a4:	92 e0       	ldi	r25, 0x02	; 2
@@ -3155,8 +3155,8 @@ ISR(ADCB_CH3_vect)
     16f6:	f2 e0       	ldi	r31, 0x02	; 2
     16f8:	44 81       	ldd	r20, Z+4	; 0x04
     16fa:	55 81       	ldd	r21, Z+5	; 0x05
-    16fc:	e0 91 72 26 	lds	r30, 0x2672
-    1700:	f0 91 73 26 	lds	r31, 0x2673
+    16fc:	e0 91 6c 26 	lds	r30, 0x266C
+    1700:	f0 91 6d 26 	lds	r31, 0x266D
     1704:	68 e0       	ldi	r22, 0x08	; 8
     1706:	80 e4       	ldi	r24, 0x40	; 64
     1708:	92 e0       	ldi	r25, 0x02	; 2
@@ -4547,7 +4547,7 @@ void fhtDitInt(int16_t *fx)
     1d30:	94 01       	movw	r18, r8
     1d32:	c3 01       	movw	r24, r6
     1d34:	b2 01       	movw	r22, r4
-    1d36:	43 d3       	rcall	.+1670   	; 0x23be <__mulsi3>
+    1d36:	61 d3       	rcall	.+1730   	; 0x23fa <__mulsi3>
     1d38:	69 83       	std	Y+1, r22	; 0x01
     1d3a:	7a 83       	std	Y+2, r23	; 0x02
     1d3c:	8b 83       	std	Y+3, r24	; 0x03
@@ -4558,7 +4558,7 @@ void fhtDitInt(int16_t *fx)
     1d46:	78 85       	ldd	r23, Y+8	; 0x08
     1d48:	89 85       	ldd	r24, Y+9	; 0x09
     1d4a:	9a 85       	ldd	r25, Y+10	; 0x0a
-    1d4c:	38 d3       	rcall	.+1648   	; 0x23be <__mulsi3>
+    1d4c:	56 d3       	rcall	.+1708   	; 0x23fa <__mulsi3>
     1d4e:	29 81       	ldd	r18, Y+1	; 0x01
     1d50:	3a 81       	ldd	r19, Y+2	; 0x02
     1d52:	4b 81       	ldd	r20, Y+3	; 0x03
@@ -4606,14 +4606,14 @@ void fhtDitInt(int16_t *fx)
     1d94:	5a 85       	ldd	r21, Y+10	; 0x0a
     1d96:	c5 01       	movw	r24, r10
     1d98:	b4 01       	movw	r22, r8
-    1d9a:	11 d3       	rcall	.+1570   	; 0x23be <__mulsi3>
+    1d9a:	2f d3       	rcall	.+1630   	; 0x23fa <__mulsi3>
     1d9c:	4b 01       	movw	r8, r22
     1d9e:	5c 01       	movw	r10, r24
     1da0:	a3 01       	movw	r20, r6
     1da2:	92 01       	movw	r18, r4
     1da4:	c7 01       	movw	r24, r14
     1da6:	b6 01       	movw	r22, r12
-    1da8:	0a d3       	rcall	.+1556   	; 0x23be <__mulsi3>
+    1da8:	28 d3       	rcall	.+1616   	; 0x23fa <__mulsi3>
     1daa:	86 1a       	sub	r8, r22
     1dac:	97 0a       	sbc	r9, r23
     1dae:	a8 0a       	sbc	r10, r24
@@ -4705,7 +4705,7 @@ void fhtDitInt(int16_t *fx)
     1e38:	7e 89       	ldd	r23, Y+22	; 0x16
     1e3a:	8f 89       	ldd	r24, Y+23	; 0x17
     1e3c:	98 8d       	ldd	r25, Y+24	; 0x18
-    1e3e:	bf d2       	rcall	.+1406   	; 0x23be <__mulsi3>
+    1e3e:	dd d2       	rcall	.+1466   	; 0x23fa <__mulsi3>
     1e40:	6b 01       	movw	r12, r22
     1e42:	7c 01       	movw	r14, r24
     1e44:	2f 81       	ldd	r18, Y+7	; 0x07
@@ -4716,7 +4716,7 @@ void fhtDitInt(int16_t *fx)
     1e4e:	7a 8d       	ldd	r23, Y+26	; 0x1a
     1e50:	8b 8d       	ldd	r24, Y+27	; 0x1b
     1e52:	9c 8d       	ldd	r25, Y+28	; 0x1c
-    1e54:	b4 d2       	rcall	.+1384   	; 0x23be <__mulsi3>
+    1e54:	d2 d2       	rcall	.+1444   	; 0x23fa <__mulsi3>
     1e56:	c6 1a       	sub	r12, r22
     1e58:	d7 0a       	sbc	r13, r23
     1e5a:	e8 0a       	sbc	r14, r24
@@ -4737,7 +4737,7 @@ void fhtDitInt(int16_t *fx)
     1e76:	7e 89       	ldd	r23, Y+22	; 0x16
     1e78:	8f 89       	ldd	r24, Y+23	; 0x17
     1e7a:	98 8d       	ldd	r25, Y+24	; 0x18
-    1e7c:	a0 d2       	rcall	.+1344   	; 0x23be <__mulsi3>
+    1e7c:	be d2       	rcall	.+1404   	; 0x23fa <__mulsi3>
     1e7e:	6b 01       	movw	r12, r22
     1e80:	7c 01       	movw	r14, r24
     1e82:	a3 01       	movw	r20, r6
@@ -4746,7 +4746,7 @@ void fhtDitInt(int16_t *fx)
     1e88:	7a 8d       	ldd	r23, Y+26	; 0x1a
     1e8a:	8b 8d       	ldd	r24, Y+27	; 0x1b
     1e8c:	9c 8d       	ldd	r25, Y+28	; 0x1c
-    1e8e:	97 d2       	rcall	.+1326   	; 0x23be <__mulsi3>
+    1e8e:	b5 d2       	rcall	.+1386   	; 0x23fa <__mulsi3>
     1e90:	c6 0e       	add	r12, r22
     1e92:	d7 1e       	adc	r13, r23
     1e94:	e8 1e       	adc	r14, r24
@@ -4801,7 +4801,7 @@ void fhtDitInt(int16_t *fx)
     1ed8:	58 8d       	ldd	r21, Y+24	; 0x18
     1eda:	c5 01       	movw	r24, r10
     1edc:	b4 01       	movw	r22, r8
-    1ede:	6f d2       	rcall	.+1246   	; 0x23be <__mulsi3>
+    1ede:	8d d2       	rcall	.+1306   	; 0x23fa <__mulsi3>
     1ee0:	2b 01       	movw	r4, r22
     1ee2:	3c 01       	movw	r6, r24
     1ee4:	29 8d       	ldd	r18, Y+25	; 0x19
@@ -4812,7 +4812,7 @@ void fhtDitInt(int16_t *fx)
     1eee:	78 85       	ldd	r23, Y+8	; 0x08
     1ef0:	89 85       	ldd	r24, Y+9	; 0x09
     1ef2:	9a 85       	ldd	r25, Y+10	; 0x0a
-    1ef4:	64 d2       	rcall	.+1224   	; 0x23be <__mulsi3>
+    1ef4:	82 d2       	rcall	.+1284   	; 0x23fa <__mulsi3>
     1ef6:	46 1a       	sub	r4, r22
     1ef8:	57 0a       	sbc	r5, r23
     1efa:	68 0a       	sbc	r6, r24
@@ -4835,7 +4835,7 @@ void fhtDitInt(int16_t *fx)
     1f1a:	78 85       	ldd	r23, Y+8	; 0x08
     1f1c:	89 85       	ldd	r24, Y+9	; 0x09
     1f1e:	9a 85       	ldd	r25, Y+10	; 0x0a
-    1f20:	4e d2       	rcall	.+1180   	; 0x23be <__mulsi3>
+    1f20:	6c d2       	rcall	.+1240   	; 0x23fa <__mulsi3>
     1f22:	6b 01       	movw	r12, r22
     1f24:	7c 01       	movw	r14, r24
     1f26:	29 8d       	ldd	r18, Y+25	; 0x19
@@ -4844,7 +4844,7 @@ void fhtDitInt(int16_t *fx)
     1f2c:	5c 8d       	ldd	r21, Y+28	; 0x1c
     1f2e:	c5 01       	movw	r24, r10
     1f30:	b4 01       	movw	r22, r8
-    1f32:	45 d2       	rcall	.+1162   	; 0x23be <__mulsi3>
+    1f32:	63 d2       	rcall	.+1222   	; 0x23fa <__mulsi3>
     1f34:	c6 0e       	add	r12, r22
     1f36:	d7 1e       	adc	r13, r23
     1f38:	e8 1e       	adc	r14, r24
@@ -5045,871 +5045,761 @@ void fhtDitInt(int16_t *fx)
     2050:	2f 90       	pop	r2
     2052:	08 95       	ret
 
-00002054 <take_sample>:
+00002054 <delay_approx_us>:
+	}
 }
 
-//hack! I am using static variables defined outside of main, which seems very sketchy, but I could not figure out how to pass argumets to this function, so I just did that...
+static void delay_approx_us(uint16_t us)
+{
+	while(us--)
+    2054:	9c 01       	movw	r18, r24
+    2056:	21 50       	subi	r18, 0x01	; 1
+    2058:	31 09       	sbc	r19, r1
+    205a:	89 2b       	or	r24, r25
+    205c:	09 f4       	brne	.+2      	; 0x2060 <delay_approx_us+0xc>
+    205e:	24 c0       	rjmp	.+72     	; 0x20a8 <delay_approx_us+0x54>
+	...
+    20a0:	21 50       	subi	r18, 0x01	; 1
+    20a2:	31 09       	sbc	r19, r1
+    20a4:	08 f0       	brcs	.+2      	; 0x20a8 <delay_approx_us+0x54>
+    20a6:	dc cf       	rjmp	.-72     	; 0x2060 <delay_approx_us+0xc>
+    20a8:	08 95       	ret
+
+000020aa <take_sample>:
+}
+
+//hack! I am using static variables defined outside of main, which seems very sketchy, but I could not figure out how to pass arguments to this function, so I just did that...
 static void take_sample(void)
 {
 	left[samples_taken] = adc_get_result(&AUDIO_IN, LEFT_AUDIO_IN_CHANNEL);
-    2054:	80 91 70 22 	lds	r24, 0x2270
-    2058:	90 91 71 22 	lds	r25, 0x2271
-    205c:	e0 e0       	ldi	r30, 0x00	; 0
-    205e:	f2 e0       	ldi	r31, 0x02	; 2
-    2060:	44 a1       	ldd	r20, Z+36	; 0x24
-    2062:	55 a1       	ldd	r21, Z+37	; 0x25
-    2064:	9c 01       	movw	r18, r24
-    2066:	22 0f       	add	r18, r18
-    2068:	33 1f       	adc	r19, r19
-    206a:	f9 01       	movw	r30, r18
-    206c:	ee 58       	subi	r30, 0x8E	; 142
-    206e:	fb 4d       	sbci	r31, 0xDB	; 219
-    2070:	40 83       	st	Z, r20
-    2072:	51 83       	std	Z+1, r21	; 0x01
+    20aa:	80 91 6a 22 	lds	r24, 0x226A
+    20ae:	90 91 6b 22 	lds	r25, 0x226B
+    20b2:	e0 e0       	ldi	r30, 0x00	; 0
+    20b4:	f2 e0       	ldi	r31, 0x02	; 2
+    20b6:	44 a1       	ldd	r20, Z+36	; 0x24
+    20b8:	55 a1       	ldd	r21, Z+37	; 0x25
+    20ba:	9c 01       	movw	r18, r24
+    20bc:	22 0f       	add	r18, r18
+    20be:	33 1f       	adc	r19, r19
+    20c0:	f9 01       	movw	r30, r18
+    20c2:	e4 59       	subi	r30, 0x94	; 148
+    20c4:	fb 4d       	sbci	r31, 0xDB	; 219
+    20c6:	40 83       	st	Z, r20
+    20c8:	51 83       	std	Z+1, r21	; 0x01
 	right[samples_taken] = adc_get_result(&AUDIO_IN, RIGHT_AUDIO_IN_CHANNEL);
-    2074:	e8 e2       	ldi	r30, 0x28	; 40
-    2076:	f2 e0       	ldi	r31, 0x02	; 2
-    2078:	44 81       	ldd	r20, Z+4	; 0x04
-    207a:	55 81       	ldd	r21, Z+5	; 0x05
-    207c:	f9 01       	movw	r30, r18
-    207e:	ee 58       	subi	r30, 0x8E	; 142
-    2080:	fd 4d       	sbci	r31, 0xDD	; 221
-    2082:	40 83       	st	Z, r20
-    2084:	51 83       	std	Z+1, r21	; 0x01
+    20ca:	e8 e2       	ldi	r30, 0x28	; 40
+    20cc:	f2 e0       	ldi	r31, 0x02	; 2
+    20ce:	44 81       	ldd	r20, Z+4	; 0x04
+    20d0:	55 81       	ldd	r21, Z+5	; 0x05
+    20d2:	f9 01       	movw	r30, r18
+    20d4:	e4 59       	subi	r30, 0x94	; 148
+    20d6:	fd 4d       	sbci	r31, 0xDD	; 221
+    20d8:	40 83       	st	Z, r20
+    20da:	51 83       	std	Z+1, r21	; 0x01
 	samples_taken++;
-    2086:	01 96       	adiw	r24, 0x01	; 1
-    2088:	80 93 70 22 	sts	0x2270, r24
-    208c:	90 93 71 22 	sts	0x2271, r25
-    2090:	08 95       	ret
+    20dc:	01 96       	adiw	r24, 0x01	; 1
+    20de:	80 93 6a 22 	sts	0x226A, r24
+    20e2:	90 93 6b 22 	sts	0x226B, r25
+    20e6:	08 95       	ret
 
-00002092 <main>:
+000020e8 <main>:
 static int16_t left[SAMPLE_SIZE];
 static int16_t right[SAMPLE_SIZE];
 static int samples_taken = 0;
 
 int main (void)
 {
-    2092:	cf 93       	push	r28
-    2094:	df 93       	push	r29
-    2096:	cd b7       	in	r28, 0x3d	; 61
-    2098:	de b7       	in	r29, 0x3e	; 62
-    209a:	2f 97       	sbiw	r28, 0x0f	; 15
-    209c:	cd bf       	out	0x3d, r28	; 61
-    209e:	de bf       	out	0x3e, r29	; 62
+    20e8:	cf 93       	push	r28
+    20ea:	df 93       	push	r29
+    20ec:	cd b7       	in	r28, 0x3d	; 61
+    20ee:	de b7       	in	r29, 0x3e	; 62
+    20f0:	2f 97       	sbiw	r28, 0x0f	; 15
+    20f2:	cd bf       	out	0x3d, r28	; 61
+    20f4:	de bf       	out	0x3e, r29	; 62
 	sysclk_init();
-    20a0:	37 dc       	rcall	.-1938   	; 0x1910 <sysclk_init>
+    20f6:	0c dc       	rcall	.-2024   	; 0x1910 <sysclk_init>
 	board_init();
-    20a2:	ac dc       	rcall	.-1704   	; 0x19fc <board_init>
+    20f8:	81 dc       	rcall	.-1790   	; 0x19fc <board_init>
 static void adc_init(void)
 {
 	struct adc_config adca_conf;
 	struct adc_channel_config adcch0_conf;
 	struct adc_channel_config adcch1_conf;
 	adc_read_configuration(&AUDIO_IN, &adca_conf);
-    20a4:	be 01       	movw	r22, r28
-    20a6:	6f 5f       	subi	r22, 0xFF	; 255
-    20a8:	7f 4f       	sbci	r23, 0xFF	; 255
-    20aa:	80 e0       	ldi	r24, 0x00	; 0
-    20ac:	92 e0       	ldi	r25, 0x02	; 2
-    20ae:	94 db       	rcall	.-2264   	; 0x17d8 <adc_read_configuration>
+    20fa:	be 01       	movw	r22, r28
+    20fc:	6f 5f       	subi	r22, 0xFF	; 255
+    20fe:	7f 4f       	sbci	r23, 0xFF	; 255
+    2100:	80 e0       	ldi	r24, 0x00	; 0
+    2102:	92 e0       	ldi	r25, 0x02	; 2
+    2104:	69 db       	rcall	.-2350   	; 0x17d8 <adc_read_configuration>
 	adcch_read_configuration(&AUDIO_IN, LEFT_AUDIO_IN_CHANNEL, &adcch0_conf);
-    20b0:	ae 01       	movw	r20, r28
-    20b2:	44 5f       	subi	r20, 0xF4	; 244
-    20b4:	5f 4f       	sbci	r21, 0xFF	; 255
-    20b6:	61 e0       	ldi	r22, 0x01	; 1
-    20b8:	80 e0       	ldi	r24, 0x00	; 0
-    20ba:	92 e0       	ldi	r25, 0x02	; 2
-    20bc:	ed db       	rcall	.-2086   	; 0x1898 <adcch_read_configuration>
+    2106:	ae 01       	movw	r20, r28
+    2108:	44 5f       	subi	r20, 0xF4	; 244
+    210a:	5f 4f       	sbci	r21, 0xFF	; 255
+    210c:	61 e0       	ldi	r22, 0x01	; 1
+    210e:	80 e0       	ldi	r24, 0x00	; 0
+    2110:	92 e0       	ldi	r25, 0x02	; 2
+    2112:	c2 db       	rcall	.-2172   	; 0x1898 <adcch_read_configuration>
 	adcch_read_configuration(&AUDIO_IN, RIGHT_AUDIO_IN_CHANNEL, &adcch1_conf);
-    20be:	ae 01       	movw	r20, r28
-    20c0:	48 5f       	subi	r20, 0xF8	; 248
-    20c2:	5f 4f       	sbci	r21, 0xFF	; 255
-    20c4:	62 e0       	ldi	r22, 0x02	; 2
-    20c6:	80 e0       	ldi	r24, 0x00	; 0
-    20c8:	92 e0       	ldi	r25, 0x02	; 2
-    20ca:	e6 db       	rcall	.-2100   	; 0x1898 <adcch_read_configuration>
+    2114:	ae 01       	movw	r20, r28
+    2116:	48 5f       	subi	r20, 0xF8	; 248
+    2118:	5f 4f       	sbci	r21, 0xFF	; 255
+    211a:	62 e0       	ldi	r22, 0x02	; 2
+    211c:	80 e0       	ldi	r24, 0x00	; 0
+    211e:	92 e0       	ldi	r25, 0x02	; 2
+    2120:	bb db       	rcall	.-2186   	; 0x1898 <adcch_read_configuration>
 {
 	/* Preserve all but conversion and resolution config. */
 	conf->ctrlb &= ~(ADC_CONMODE_bm | ADC_RESOLUTION_gm);
 	conf->ctrlb |= (uint8_t)res | (uint8_t)sign;
 
 	conf->refctrl &= ~ADC_REFSEL_gm;
-    20cc:	8b 81       	ldd	r24, Y+3	; 0x03
-    20ce:	8f 78       	andi	r24, 0x8F	; 143
+    2122:	8b 81       	ldd	r24, Y+3	; 0x03
+    2124:	8f 78       	andi	r24, 0x8F	; 143
 static inline void adc_set_conversion_parameters(struct adc_config *conf,
 		enum adc_sign sign, enum adc_resolution res,
 		enum adc_reference ref)
 {
 	/* Preserve all but conversion and resolution config. */
 	conf->ctrlb &= ~(ADC_CONMODE_bm | ADC_RESOLUTION_gm);
-    20d0:	9a 81       	ldd	r25, Y+2	; 0x02
-    20d2:	99 7e       	andi	r25, 0xE9	; 233
+    2126:	9a 81       	ldd	r25, Y+2	; 0x02
+    2128:	99 7e       	andi	r25, 0xE9	; 233
 		conf->ctrlb |= ADC_FREERUN_bm;
 		break;
 
 #if ADC_NR_OF_CHANNELS > 1
 	case ADC_TRIG_FREERUN_SWEEP:
 		conf->ctrlb |= ADC_FREERUN_bm;
-    20d4:	98 61       	ori	r25, 0x18	; 24
-    20d6:	9a 83       	std	Y+2, r25	; 0x02
+    212a:	98 61       	ori	r25, 0x18	; 24
+    212c:	9a 83       	std	Y+2, r25	; 0x02
 		conf->evctrl = (nr_of_ch - 1) << ADC_SWEEP_gp;
-    20d8:	90 e4       	ldi	r25, 0x40	; 64
-    20da:	9c 83       	std	Y+4, r25	; 0x04
+    212e:	90 e4       	ldi	r25, 0x40	; 64
+    2130:	9c 83       	std	Y+4, r25	; 0x04
  * \arg \c ADC_INT_BANDGAP for bandgap reference.
  */
 static inline void adc_enable_internal_input(struct adc_config *conf,
 		uint8_t int_inp)
 {
 	conf->refctrl |= int_inp;
-    20dc:	82 60       	ori	r24, 0x02	; 2
-    20de:	8b 83       	std	Y+3, r24	; 0x03
+    2132:	82 60       	ori	r24, 0x02	; 2
+    2134:	8b 83       	std	Y+3, r24	; 0x03
 		psc = ADC_PRESCALER_DIV256_gc;
 	} else {
 		psc = ADC_PRESCALER_DIV512_gc;
 	}
 
 	conf->prescaler = psc;
-    20e0:	82 e0       	ldi	r24, 0x02	; 2
-    20e2:	8d 83       	std	Y+5, r24	; 0x05
+    2136:	82 e0       	ldi	r24, 0x02	; 2
+    2138:	8d 83       	std	Y+5, r24	; 0x05
 		 */
 #if XMEGA_E
 		ch_conf->ctrl = adcch_get_gain_setting(gain) |
 				ADC_CH_INPUTMODE_DIFFWGAINH_gc;
 #else
 		ch_conf->ctrl = adcch_get_gain_setting(gain) |
-    20e4:	8b e1       	ldi	r24, 0x1B	; 27
-    20e6:	8c 87       	std	Y+12, r24	; 0x0c
+    213a:	87 e1       	ldi	r24, 0x17	; 23
+    213c:	8c 87       	std	Y+12, r24	; 0x0c
 				ADC_CH_INPUTMODE_DIFFWGAIN_gc;
 #endif
 		ch_conf->muxctrl = (pos << ADC_CH_MUXPOS_gp) |
-    20e8:	1d 86       	std	Y+13, r1	; 0x0d
+    213e:	1d 86       	std	Y+13, r1	; 0x0d
 		 */
 #if XMEGA_E
 		ch_conf->ctrl = adcch_get_gain_setting(gain) |
 				ADC_CH_INPUTMODE_DIFFWGAINH_gc;
 #else
 		ch_conf->ctrl = adcch_get_gain_setting(gain) |
-    20ea:	88 87       	std	Y+8, r24	; 0x08
+    2140:	88 87       	std	Y+8, r24	; 0x08
 				ADC_CH_INPUTMODE_DIFFWGAIN_gc;
 #endif
 		ch_conf->muxctrl = (pos << ADC_CH_MUXPOS_gp) |
-    20ec:	89 e0       	ldi	r24, 0x09	; 9
-    20ee:	89 87       	std	Y+9, r24	; 0x09
+    2142:	89 e0       	ldi	r24, 0x09	; 9
+    2144:	89 87       	std	Y+9, r24	; 0x09
 	adc_set_conversion_trigger(&adca_conf, ADC_TRIG_FREERUN_SWEEP, 2, 0);
 	adc_enable_internal_input(&adca_conf, ADC_INT_BANDGAP);
 	adc_set_clock_rate(&adca_conf, 2000000UL);
 	adcch_set_input(&adcch0_conf, ADCCH_POS_PIN0, ADCCH_NEG_PIN4, GAIN);
 	adcch_set_input(&adcch1_conf, ADCCH_POS_PIN1, ADCCH_NEG_PIN5, GAIN);
 	adc_write_configuration(&AUDIO_IN, &adca_conf);
-    20f0:	be 01       	movw	r22, r28
-    20f2:	6f 5f       	subi	r22, 0xFF	; 255
-    20f4:	7f 4f       	sbci	r23, 0xFF	; 255
-    20f6:	80 e0       	ldi	r24, 0x00	; 0
-    20f8:	92 e0       	ldi	r25, 0x02	; 2
-    20fa:	1b db       	rcall	.-2506   	; 0x1732 <adc_write_configuration>
+    2146:	be 01       	movw	r22, r28
+    2148:	6f 5f       	subi	r22, 0xFF	; 255
+    214a:	7f 4f       	sbci	r23, 0xFF	; 255
+    214c:	80 e0       	ldi	r24, 0x00	; 0
+    214e:	92 e0       	ldi	r25, 0x02	; 2
+    2150:	f0 da       	rcall	.-2592   	; 0x1732 <adc_write_configuration>
 	adcch_write_configuration(&AUDIO_IN, LEFT_AUDIO_IN_CHANNEL, &adcch0_conf);
-    20fc:	ae 01       	movw	r20, r28
-    20fe:	44 5f       	subi	r20, 0xF4	; 244
-    2100:	5f 4f       	sbci	r21, 0xFF	; 255
-    2102:	61 e0       	ldi	r22, 0x01	; 1
-    2104:	80 e0       	ldi	r24, 0x00	; 0
-    2106:	92 e0       	ldi	r25, 0x02	; 2
-    2108:	8c db       	rcall	.-2280   	; 0x1822 <adcch_write_configuration>
+    2152:	ae 01       	movw	r20, r28
+    2154:	44 5f       	subi	r20, 0xF4	; 244
+    2156:	5f 4f       	sbci	r21, 0xFF	; 255
+    2158:	61 e0       	ldi	r22, 0x01	; 1
+    215a:	80 e0       	ldi	r24, 0x00	; 0
+    215c:	92 e0       	ldi	r25, 0x02	; 2
+    215e:	61 db       	rcall	.-2366   	; 0x1822 <adcch_write_configuration>
 	adcch_write_configuration(&AUDIO_IN, RIGHT_AUDIO_IN_CHANNEL, &adcch1_conf);
-    210a:	ae 01       	movw	r20, r28
-    210c:	48 5f       	subi	r20, 0xF8	; 248
-    210e:	5f 4f       	sbci	r21, 0xFF	; 255
-    2110:	62 e0       	ldi	r22, 0x02	; 2
-    2112:	80 e0       	ldi	r24, 0x00	; 0
-    2114:	92 e0       	ldi	r25, 0x02	; 2
-    2116:	85 db       	rcall	.-2294   	; 0x1822 <adcch_write_configuration>
+    2160:	ae 01       	movw	r20, r28
+    2162:	48 5f       	subi	r20, 0xF8	; 248
+    2164:	5f 4f       	sbci	r21, 0xFF	; 255
+    2166:	62 e0       	ldi	r22, 0x02	; 2
+    2168:	80 e0       	ldi	r24, 0x00	; 0
+    216a:	92 e0       	ldi	r25, 0x02	; 2
+    216c:	5a db       	rcall	.-2380   	; 0x1822 <adcch_write_configuration>
  * Enables all interrupt levels, with vectors located in the application section
  * and fixed priority scheduling.
  */
 static inline void pmic_init(void)
 {
 	PMIC.CTRL = PMIC_LVL_LOW | PMIC_LVL_MEDIUM |
-    2118:	87 e0       	ldi	r24, 0x07	; 7
-    211a:	e0 ea       	ldi	r30, 0xA0	; 160
-    211c:	f0 e0       	ldi	r31, 0x00	; 0
-    211e:	82 83       	std	Z+2, r24	; 0x02
+    216e:	87 e0       	ldi	r24, 0x07	; 7
+    2170:	e0 ea       	ldi	r30, 0xA0	; 160
+    2172:	f0 e0       	ldi	r31, 0x00	; 0
+    2174:	82 83       	std	Z+2, r24	; 0x02
 	board_init();
 	adc_init();
 	pmic_init();
 	ioport_init();
 
 	adc_enable(&AUDIO_IN);
-    2120:	80 e0       	ldi	r24, 0x00	; 0
-    2122:	92 e0       	ldi	r25, 0x02	; 2
-    2124:	0e 94 20 02 	call	0x440	; 0x440 <adc_enable>
+    2176:	80 e0       	ldi	r24, 0x00	; 0
+    2178:	92 e0       	ldi	r25, 0x02	; 2
+    217a:	0e 94 20 02 	call	0x440	; 0x440 <adc_enable>
 	
 	//Set up a timer to call take_sample() every 3,200 cycles
 	tc_enable(&TCC0);
-    2128:	80 e0       	ldi	r24, 0x00	; 0
-    212a:	98 e0       	ldi	r25, 0x08	; 8
-    212c:	0e 94 8b 08 	call	0x1116	; 0x1116 <tc_enable>
+    217e:	80 e0       	ldi	r24, 0x00	; 0
+    2180:	98 e0       	ldi	r25, 0x08	; 8
+    2182:	0e 94 8b 08 	call	0x1116	; 0x1116 <tc_enable>
 	tc_set_overflow_interrupt_callback(&TCC0, take_sample);
-    2130:	6a e2       	ldi	r22, 0x2A	; 42
-    2132:	70 e1       	ldi	r23, 0x10	; 16
-    2134:	80 e0       	ldi	r24, 0x00	; 0
-    2136:	98 e0       	ldi	r25, 0x08	; 8
-    2138:	4c d8       	rcall	.-3944   	; 0x11d2 <tc_set_overflow_interrupt_callback>
+    2186:	65 e5       	ldi	r22, 0x55	; 85
+    2188:	70 e1       	ldi	r23, 0x10	; 16
+    218a:	80 e0       	ldi	r24, 0x00	; 0
+    218c:	98 e0       	ldi	r25, 0x08	; 8
+    218e:	21 d8       	rcall	.-4030   	; 0x11d2 <tc_set_overflow_interrupt_callback>
  * \param tc Pointer to TC module.
  * \param wgm : waveform generator
  */
 static inline void tc_set_wgm(volatile void *tc, enum tc_wg_mode_t wgm)
 {
 	((TC0_t *)tc)->CTRLB = (((TC0_t *)tc)->CTRLB & ~TC0_WGMODE_gm) | wgm;
-    213a:	e0 e0       	ldi	r30, 0x00	; 0
-    213c:	f8 e0       	ldi	r31, 0x08	; 8
-    213e:	81 81       	ldd	r24, Z+1	; 0x01
-    2140:	88 7f       	andi	r24, 0xF8	; 248
-    2142:	81 83       	std	Z+1, r24	; 0x01
+    2190:	e0 e0       	ldi	r30, 0x00	; 0
+    2192:	f8 e0       	ldi	r31, 0x08	; 8
+    2194:	81 81       	ldd	r24, Z+1	; 0x01
+    2196:	88 7f       	andi	r24, 0xF8	; 248
+    2198:	81 83       	std	Z+1, r24	; 0x01
  * \param tc Pointer to TC module.
  * \param per_value Period value : PER
  */
 static inline void tc_write_period(volatile void *tc, uint16_t per_value)
 {
 	((TC0_t *)tc)->PER = per_value;
-    2144:	80 e8       	ldi	r24, 0x80	; 128
-    2146:	9c e0       	ldi	r25, 0x0C	; 12
-    2148:	86 a3       	std	Z+38, r24	; 0x26
-    214a:	97 a3       	std	Z+39, r25	; 0x27
+    219a:	80 e8       	ldi	r24, 0x80	; 128
+    219c:	9c e0       	ldi	r25, 0x0C	; 12
+    219e:	86 a3       	std	Z+38, r24	; 0x26
+    21a0:	97 a3       	std	Z+39, r25	; 0x27
  * \note  Configures OVFINTLVL in INTCTRLA
  */
 static inline void tc_set_overflow_interrupt_level(volatile void *tc,
 		enum TC_INT_LEVEL_t level)
 {
 	((TC0_t *)tc)->INTCTRLA = ((TC0_t *)tc)->INTCTRLA & ~TC0_OVFINTLVL_gm;
-    214c:	86 81       	ldd	r24, Z+6	; 0x06
-    214e:	8c 7f       	andi	r24, 0xFC	; 252
-    2150:	86 83       	std	Z+6, r24	; 0x06
+    21a2:	86 81       	ldd	r24, Z+6	; 0x06
+    21a4:	8c 7f       	andi	r24, 0xFC	; 252
+    21a6:	86 83       	std	Z+6, r24	; 0x06
 	((TC0_t *)tc)->INTCTRLA =
 			((TC0_t *)tc)->INTCTRLA | (level << TC0_OVFINTLVL_gp);
-    2152:	86 81       	ldd	r24, Z+6	; 0x06
+    21a8:	86 81       	ldd	r24, Z+6	; 0x06
  */
 static inline void tc_set_overflow_interrupt_level(volatile void *tc,
 		enum TC_INT_LEVEL_t level)
 {
 	((TC0_t *)tc)->INTCTRLA = ((TC0_t *)tc)->INTCTRLA & ~TC0_OVFINTLVL_gm;
 	((TC0_t *)tc)->INTCTRLA =
-    2154:	81 60       	ori	r24, 0x01	; 1
-    2156:	86 83       	std	Z+6, r24	; 0x06
+    21aa:	81 60       	ori	r24, 0x01	; 1
+    21ac:	86 83       	std	Z+6, r24	; 0x06
 	tc_set_wgm(&TCC0, TC_WG_NORMAL);
 	tc_write_period(&TCC0, 3200);
 	tc_set_overflow_interrupt_level(&TCC0, TC_INT_LVL_LO);
 	cpu_irq_enable();
-    2158:	78 94       	sei
+    21ae:	78 94       	sei
  */
 static inline void tc_write_clock_source(volatile void *tc,
 		TC_CLKSEL_t TC_CLKSEL_enum)
 {
 	((TC0_t *)tc)->CTRLA =
 			(((TC0_t *)tc)->CTRLA & ~TC0_CLKSEL_gm) |
-    215a:	80 81       	ld	r24, Z
+    21b0:	80 81       	ld	r24, Z
  * \note Configuring the clock also starts the timer
  */
 static inline void tc_write_clock_source(volatile void *tc,
 		TC_CLKSEL_t TC_CLKSEL_enum)
 {
 	((TC0_t *)tc)->CTRLA =
-    215c:	80 7f       	andi	r24, 0xF0	; 240
-    215e:	81 60       	ori	r24, 0x01	; 1
-    2160:	80 83       	st	Z, r24
+    21b2:	80 7f       	andi	r24, 0xF0	; 240
+    21b4:	81 60       	ori	r24, 0x01	; 1
+    21b6:	80 83       	st	Z, r24
 		enum ioport_direction dir)
 {
 	PORT_t *base = arch_ioport_pin_to_base(pin);
 
 	if (dir == IOPORT_DIR_OUTPUT) {
 		base->DIRSET = arch_ioport_pin_to_mask(pin);
-    2162:	e0 e4       	ldi	r30, 0x40	; 64
-    2164:	f6 e0       	ldi	r31, 0x06	; 6
-    2166:	80 e8       	ldi	r24, 0x80	; 128
-    2168:	81 83       	std	Z+1, r24	; 0x01
-    216a:	80 e4       	ldi	r24, 0x40	; 64
-    216c:	81 83       	std	Z+1, r24	; 0x01
-    216e:	80 e2       	ldi	r24, 0x20	; 32
-    2170:	81 83       	std	Z+1, r24	; 0x01
-    2172:	80 e1       	ldi	r24, 0x10	; 16
-    2174:	81 83       	std	Z+1, r24	; 0x01
-    2176:	88 e0       	ldi	r24, 0x08	; 8
-    2178:	81 83       	std	Z+1, r24	; 0x01
-    217a:	84 e0       	ldi	r24, 0x04	; 4
-    217c:	81 83       	std	Z+1, r24	; 0x01
-    217e:	82 e0       	ldi	r24, 0x02	; 2
-    2180:	e0 ee       	ldi	r30, 0xE0	; 224
-    2182:	f7 e0       	ldi	r31, 0x07	; 7
-    2184:	81 83       	std	Z+1, r24	; 0x01
-    2186:	0f 2e       	mov	r0, r31
-    2188:	fc e7       	ldi	r31, 0x7C	; 124
-    218a:	6f 2e       	mov	r6, r31
-    218c:	f1 e2       	ldi	r31, 0x21	; 33
-    218e:	7f 2e       	mov	r7, r31
-    2190:	f0 2d       	mov	r31, r0
-    2192:	0f 2e       	mov	r0, r31
-    2194:	f2 ea       	ldi	r31, 0xA2	; 162
-    2196:	8f 2e       	mov	r8, r31
-    2198:	f1 e2       	ldi	r31, 0x21	; 33
-    219a:	9f 2e       	mov	r9, r31
-    219c:	f0 2d       	mov	r31, r0
-    219e:	0f 2e       	mov	r0, r31
-    21a0:	f0 e7       	ldi	r31, 0x70	; 112
-    21a2:	ef 2e       	mov	r14, r31
-    21a4:	f2 e2       	ldi	r31, 0x22	; 34
-    21a6:	ff 2e       	mov	r15, r31
-    21a8:	f0 2d       	mov	r31, r0
-    21aa:	0f 2e       	mov	r0, r31
-    21ac:	fc e7       	ldi	r31, 0x7C	; 124
-    21ae:	4f 2e       	mov	r4, r31
-    21b0:	f0 e2       	ldi	r31, 0x20	; 32
-    21b2:	5f 2e       	mov	r5, r31
-    21b4:	f0 2d       	mov	r31, r0
-    21b6:	0f 2e       	mov	r0, r31
-    21b8:	f2 ea       	ldi	r31, 0xA2	; 162
-    21ba:	af 2e       	mov	r10, r31
-    21bc:	f0 e2       	ldi	r31, 0x20	; 32
-    21be:	bf 2e       	mov	r11, r31
-    21c0:	f0 2d       	mov	r31, r0
-    21c2:	00 e7       	ldi	r16, 0x70	; 112
-    21c4:	11 e2       	ldi	r17, 0x21	; 33
+    21b8:	82 e0       	ldi	r24, 0x02	; 2
+    21ba:	e0 ee       	ldi	r30, 0xE0	; 224
+    21bc:	f7 e0       	ldi	r31, 0x07	; 7
+    21be:	81 83       	std	Z+1, r24	; 0x01
+    21c0:	81 e0       	ldi	r24, 0x01	; 1
+    21c2:	e0 e8       	ldi	r30, 0x80	; 128
+    21c4:	f6 e0       	ldi	r31, 0x06	; 6
+    21c6:	81 83       	std	Z+1, r24	; 0x01
 	PORT_t *base = arch_ioport_pin_to_base(pin);
 
 	if (level) {
 		base->OUTSET = arch_ioport_pin_to_mask(pin);
 	} else {
 		base->OUTCLR = arch_ioport_pin_to_mask(pin);
-    21c6:	0f 2e       	mov	r0, r31
-    21c8:	f0 e4       	ldi	r31, 0x40	; 64
-    21ca:	2f 2e       	mov	r2, r31
-    21cc:	f6 e0       	ldi	r31, 0x06	; 6
-    21ce:	3f 2e       	mov	r3, r31
-    21d0:	f0 2d       	mov	r31, r0
-    21d2:	0f 2e       	mov	r0, r31
-    21d4:	f2 e7       	ldi	r31, 0x72	; 114
-    21d6:	cf 2e       	mov	r12, r31
-    21d8:	f5 e2       	ldi	r31, 0x25	; 37
-    21da:	df 2e       	mov	r13, r31
-    21dc:	f0 2d       	mov	r31, r0
+    21c8:	0f 2e       	mov	r0, r31
+    21ca:	f0 ee       	ldi	r31, 0xE0	; 224
+    21cc:	4f 2e       	mov	r4, r31
+    21ce:	f7 e0       	ldi	r31, 0x07	; 7
+    21d0:	5f 2e       	mov	r5, r31
+    21d2:	f0 2d       	mov	r31, r0
+    21d4:	00 e8       	ldi	r16, 0x80	; 128
+    21d6:	16 e0       	ldi	r17, 0x06	; 6
+    21d8:	99 24       	eor	r9, r9
+    21da:	93 94       	inc	r9
+    21dc:	6e 01       	movw	r12, r28
+    21de:	24 e0       	ldi	r18, 0x04	; 4
+    21e0:	c2 0e       	add	r12, r18
+    21e2:	d1 1c       	adc	r13, r1
 	static bool right_treble = false;
-
+	*/
 
 	while(true)
 	{		
 		if (samples_taken == SAMPLE_SIZE)
-    21de:	80 91 70 22 	lds	r24, 0x2270
-    21e2:	90 91 71 22 	lds	r25, 0x2271
-    21e6:	81 15       	cp	r24, r1
-    21e8:	91 40       	sbci	r25, 0x01	; 1
-    21ea:	09 f0       	breq	.+2      	; 0x21ee <main+0x15c>
-    21ec:	37 c0       	rjmp	.+110    	; 0x225c <main+0x1ca>
+    21e4:	80 91 6a 22 	lds	r24, 0x226A
+    21e8:	90 91 6b 22 	lds	r25, 0x226B
+    21ec:	81 15       	cp	r24, r1
+    21ee:	91 40       	sbci	r25, 0x01	; 1
+    21f0:	09 f0       	breq	.+2      	; 0x21f4 <main+0x10c>
+    21f2:	ff c0       	rjmp	.+510    	; 0x23f2 <main+0x30a>
 		{
 			cpu_irq_disable();
-    21ee:	f8 94       	cli
-    21f0:	82 e0       	ldi	r24, 0x02	; 2
-    21f2:	80 93 e6 07 	sts	0x07E6, r24
+    21f4:	f8 94       	cli
+    21f6:	82 e0       	ldi	r24, 0x02	; 2
+    21f8:	f2 01       	movw	r30, r4
+    21fa:	86 83       	std	Z+6, r24	; 0x06
 			ioport_set_pin_level(TRANSFORMING_LED, false);
 			
 			applyHannWindow(left);
-    21f6:	82 e7       	ldi	r24, 0x72	; 114
-    21f8:	94 e2       	ldi	r25, 0x24	; 36
-    21fa:	b3 d8       	rcall	.-3738   	; 0x1362 <applyHannWindow>
-			fhtDitInt(left);
-    21fc:	82 e7       	ldi	r24, 0x72	; 114
+    21fc:	8c e6       	ldi	r24, 0x6C	; 108
     21fe:	94 e2       	ldi	r25, 0x24	; 36
-    2200:	9a dc       	rcall	.-1740   	; 0x1b36 <fhtDitInt>
-			complexToDecibelWithGain(left);
-    2202:	82 e7       	ldi	r24, 0x72	; 114
+    2200:	b0 d8       	rcall	.-3744   	; 0x1362 <applyHannWindow>
+			fhtDitInt(left);
+    2202:	8c e6       	ldi	r24, 0x6C	; 108
     2204:	94 e2       	ldi	r25, 0x24	; 36
-    2206:	23 d8       	rcall	.-4026   	; 0x124e <complexToDecibelWithGain>
-    2208:	e2 e7       	ldi	r30, 0x72	; 114
-    220a:	f4 e2       	ldi	r31, 0x24	; 36
-    220c:	a0 e7       	ldi	r26, 0x70	; 112
-    220e:	b1 e2       	ldi	r27, 0x21	; 33
+    2206:	97 dc       	rcall	.-1746   	; 0x1b36 <fhtDitInt>
+			complexToDecibelWithGain(left);
+    2208:	8c e6       	ldi	r24, 0x6C	; 108
+    220a:	94 e2       	ldi	r25, 0x24	; 36
+    220c:	20 d8       	rcall	.-4032   	; 0x124e <complexToDecibelWithGain>
+    220e:	ec e6       	ldi	r30, 0x6C	; 108
+    2210:	f4 e2       	ldi	r31, 0x24	; 36
+    2212:	aa e6       	ldi	r26, 0x6A	; 106
+    2214:	b1 e2       	ldi	r27, 0x21	; 33
+    2216:	2c e6       	ldi	r18, 0x6C	; 108
+    2218:	35 e2       	ldi	r19, 0x25	; 37
 			for (int i = 0; i < SAMPLE_SIZE / 2; i++)
 				left_results[i] = left[i];
-    2210:	81 91       	ld	r24, Z+
-    2212:	91 91       	ld	r25, Z+
-    2214:	8d 93       	st	X+, r24
-    2216:	9d 93       	st	X+, r25
+    221a:	81 91       	ld	r24, Z+
+    221c:	91 91       	ld	r25, Z+
+    221e:	8d 93       	st	X+, r24
+    2220:	9d 93       	st	X+, r25
 			ioport_set_pin_level(TRANSFORMING_LED, false);
 			
 			applyHannWindow(left);
 			fhtDitInt(left);
 			complexToDecibelWithGain(left);
 			for (int i = 0; i < SAMPLE_SIZE / 2; i++)
-    2218:	ec 15       	cp	r30, r12
-    221a:	fd 05       	cpc	r31, r13
-    221c:	c9 f7       	brne	.-14     	; 0x2210 <main+0x17e>
+    2222:	e2 17       	cp	r30, r18
+    2224:	f3 07       	cpc	r31, r19
+    2226:	c9 f7       	brne	.-14     	; 0x221a <main+0x132>
 				left_results[i] = left[i];
 			
 			applyHannWindow(right);
-    221e:	82 e7       	ldi	r24, 0x72	; 114
-    2220:	92 e2       	ldi	r25, 0x22	; 34
-    2222:	9f d8       	rcall	.-3778   	; 0x1362 <applyHannWindow>
+    2228:	8c e6       	ldi	r24, 0x6C	; 108
+    222a:	92 e2       	ldi	r25, 0x22	; 34
+    222c:	9a d8       	rcall	.-3788   	; 0x1362 <applyHannWindow>
 			fhtDitInt(right);
-    2224:	82 e7       	ldi	r24, 0x72	; 114
-    2226:	92 e2       	ldi	r25, 0x22	; 34
-    2228:	86 dc       	rcall	.-1780   	; 0x1b36 <fhtDitInt>
+    222e:	8c e6       	ldi	r24, 0x6C	; 108
+    2230:	92 e2       	ldi	r25, 0x22	; 34
+    2232:	81 dc       	rcall	.-1790   	; 0x1b36 <fhtDitInt>
 			complexToDecibelWithGain(right);
-    222a:	82 e7       	ldi	r24, 0x72	; 114
-    222c:	92 e2       	ldi	r25, 0x22	; 34
-    222e:	0f d8       	rcall	.-4066   	; 0x124e <complexToDecibelWithGain>
-    2230:	e2 e7       	ldi	r30, 0x72	; 114
-    2232:	f2 e2       	ldi	r31, 0x22	; 34
-    2234:	a0 e7       	ldi	r26, 0x70	; 112
-    2236:	b0 e2       	ldi	r27, 0x20	; 32
-    2238:	22 e7       	ldi	r18, 0x72	; 114
-    223a:	33 e2       	ldi	r19, 0x23	; 35
+    2234:	8c e6       	ldi	r24, 0x6C	; 108
+    2236:	92 e2       	ldi	r25, 0x22	; 34
+    2238:	0a d8       	rcall	.-4076   	; 0x124e <complexToDecibelWithGain>
+    223a:	ec e6       	ldi	r30, 0x6C	; 108
+    223c:	f2 e2       	ldi	r31, 0x22	; 34
+    223e:	aa e6       	ldi	r26, 0x6A	; 106
+    2240:	b0 e2       	ldi	r27, 0x20	; 32
+    2242:	2c e6       	ldi	r18, 0x6C	; 108
+    2244:	33 e2       	ldi	r19, 0x23	; 35
 			for (int i = 0; i < SAMPLE_SIZE / 2; i++)
 				right_results[i] = right[i];
-    223c:	81 91       	ld	r24, Z+
-    223e:	91 91       	ld	r25, Z+
-    2240:	8d 93       	st	X+, r24
-    2242:	9d 93       	st	X+, r25
+    2246:	81 91       	ld	r24, Z+
+    2248:	91 91       	ld	r25, Z+
+    224a:	8d 93       	st	X+, r24
+    224c:	9d 93       	st	X+, r25
 				left_results[i] = left[i];
 			
 			applyHannWindow(right);
 			fhtDitInt(right);
 			complexToDecibelWithGain(right);
 			for (int i = 0; i < SAMPLE_SIZE / 2; i++)
-    2244:	e2 17       	cp	r30, r18
-    2246:	f3 07       	cpc	r31, r19
-    2248:	c9 f7       	brne	.-14     	; 0x223c <main+0x1aa>
+    224e:	e2 17       	cp	r30, r18
+    2250:	f3 07       	cpc	r31, r19
+    2252:	c9 f7       	brne	.-14     	; 0x2246 <main+0x15e>
 				right_results[i] = right[i];
 				
 			samples_taken = 0;
-    224a:	10 92 70 22 	sts	0x2270, r1
-    224e:	10 92 71 22 	sts	0x2271, r1
+    2254:	10 92 6a 22 	sts	0x226A, r1
+    2258:	10 92 6b 22 	sts	0x226B, r1
 		bool level)
 {
 	PORT_t *base = arch_ioport_pin_to_base(pin);
 
 	if (level) {
 		base->OUTSET = arch_ioport_pin_to_mask(pin);
-    2252:	82 e0       	ldi	r24, 0x02	; 2
-    2254:	80 93 e5 07 	sts	0x07E5, r24
+    225c:	82 e0       	ldi	r24, 0x02	; 2
+    225e:	d2 01       	movw	r26, r4
+    2260:	15 96       	adiw	r26, 0x05	; 5
+    2262:	8c 93       	st	X, r24
+	}
+}
+
+static void write_strip(int16_t left_results[], int16_t right_results[])
+{
+	cpu_irq_disable();
+    2264:	f8 94       	cli
+    2266:	ec e9       	ldi	r30, 0x9C	; 156
+    2268:	f1 e2       	ldi	r31, 0x21	; 33
+    226a:	ac e9       	ldi	r26, 0x9C	; 156
+    226c:	b0 e2       	ldi	r27, 0x20	; 32
+    226e:	2a e6       	ldi	r18, 0x6A	; 106
+    2270:	32 e2       	ldi	r19, 0x22	; 34
+	
+	uint16_t treble = 0, bass = 0, mid = 0;
+    2272:	e1 2c       	mov	r14, r1
+    2274:	f1 2c       	mov	r15, r1
+	for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
+		treble += left_results[i] + right_results[i];
+    2276:	41 91       	ld	r20, Z+
+    2278:	51 91       	ld	r21, Z+
+    227a:	8d 91       	ld	r24, X+
+    227c:	9d 91       	ld	r25, X+
+    227e:	84 0f       	add	r24, r20
+    2280:	95 1f       	adc	r25, r21
+    2282:	e8 0e       	add	r14, r24
+    2284:	f9 1e       	adc	r15, r25
+static void write_strip(int16_t left_results[], int16_t right_results[])
+{
+	cpu_irq_disable();
+	
+	uint16_t treble = 0, bass = 0, mid = 0;
+	for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
+    2286:	e2 17       	cp	r30, r18
+    2288:	f3 07       	cpc	r31, r19
+    228a:	a9 f7       	brne	.-22     	; 0x2276 <main+0x18e>
+    228c:	aa e6       	ldi	r26, 0x6A	; 106
+    228e:	b0 e2       	ldi	r27, 0x20	; 32
+    2290:	46 e7       	ldi	r20, 0x76	; 118
+    2292:	51 e2       	ldi	r21, 0x21	; 33
+    2294:	ea e6       	ldi	r30, 0x6A	; 106
+    2296:	f1 e2       	ldi	r31, 0x21	; 33
+    2298:	61 2c       	mov	r6, r1
+    229a:	71 2c       	mov	r7, r1
+		treble += left_results[i] + right_results[i];
+	for (int i = 0; i < BASS_THRESHOLD; i++)
+		bass += left_results[i] + right_results[i];
+    229c:	21 91       	ld	r18, Z+
+    229e:	31 91       	ld	r19, Z+
+    22a0:	8d 91       	ld	r24, X+
+    22a2:	9d 91       	ld	r25, X+
+    22a4:	82 0f       	add	r24, r18
+    22a6:	93 1f       	adc	r25, r19
+    22a8:	68 0e       	add	r6, r24
+    22aa:	79 1e       	adc	r7, r25
+	cpu_irq_disable();
+	
+	uint16_t treble = 0, bass = 0, mid = 0;
+	for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
+		treble += left_results[i] + right_results[i];
+	for (int i = 0; i < BASS_THRESHOLD; i++)
+    22ac:	e4 17       	cp	r30, r20
+    22ae:	f5 07       	cpc	r31, r21
+    22b0:	a9 f7       	brne	.-22     	; 0x229c <main+0x1b4>
+    22b2:	e6 e7       	ldi	r30, 0x76	; 118
+    22b4:	f1 e2       	ldi	r31, 0x21	; 33
+    22b6:	a6 e7       	ldi	r26, 0x76	; 118
+    22b8:	b0 e2       	ldi	r27, 0x20	; 32
+    22ba:	4c e9       	ldi	r20, 0x9C	; 156
+    22bc:	51 e2       	ldi	r21, 0x21	; 33
+    22be:	a1 2c       	mov	r10, r1
+    22c0:	b1 2c       	mov	r11, r1
+		bass += left_results[i] + right_results[i];
+	for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
+		mid += left_results[i] + right_results[i];
+    22c2:	21 91       	ld	r18, Z+
+    22c4:	31 91       	ld	r19, Z+
+    22c6:	8d 91       	ld	r24, X+
+    22c8:	9d 91       	ld	r25, X+
+    22ca:	82 0f       	add	r24, r18
+    22cc:	93 1f       	adc	r25, r19
+    22ce:	a8 0e       	add	r10, r24
+    22d0:	b9 1e       	adc	r11, r25
+	uint16_t treble = 0, bass = 0, mid = 0;
+	for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
+		treble += left_results[i] + right_results[i];
+	for (int i = 0; i < BASS_THRESHOLD; i++)
+		bass += left_results[i] + right_results[i];
+	for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
+    22d2:	e4 17       	cp	r30, r20
+    22d4:	f5 07       	cpc	r31, r21
+    22d6:	a9 f7       	brne	.-22     	; 0x22c2 <main+0x1da>
+	} else {
+		base->OUTCLR = arch_ioport_pin_to_mask(pin);
+    22d8:	f8 01       	movw	r30, r16
+    22da:	96 82       	std	Z+6, r9	; 0x06
+		mid += left_results[i] + right_results[i];
+		
+	uint8_t green = treble >> 0, red = bass >> 1, blue = mid >> 1;
+	
+	ioport_set_pin_low(STRIP_SIGNAL_PIN);
+	delay_approx_us(50);
+    22dc:	82 e3       	ldi	r24, 0x32	; 50
+    22de:	90 e0       	ldi	r25, 0x00	; 0
+    22e0:	b9 de       	rcall	.-654    	; 0x2054 <delay_approx_us>
+	for (int i = 0; i < BASS_THRESHOLD; i++)
+		bass += left_results[i] + right_results[i];
+	for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
+		mid += left_results[i] + right_results[i];
+		
+	uint8_t green = treble >> 0, red = bass >> 1, blue = mid >> 1;
+    22e2:	e9 82       	std	Y+1, r14	; 0x01
+    22e4:	76 94       	lsr	r7
+    22e6:	67 94       	ror	r6
+    22e8:	6a 82       	std	Y+2, r6	; 0x02
+    22ea:	b6 94       	lsr	r11
+    22ec:	a7 94       	ror	r10
+    22ee:	ab 82       	std	Y+3, r10	; 0x03
+	delay_approx_us(50);
+	
+	uint8_t color[3];
+	color[0] = green;
+	color[1] = red;
+	color[2] = blue;
+    22f0:	6e e1       	ldi	r22, 0x1E	; 30
+    22f2:	70 e0       	ldi	r23, 0x00	; 0
+    22f4:	78 c0       	rjmp	.+240    	; 0x23e6 <main+0x2fe>
+static void send_color(uint8_t color[])
+{
+	int rgb_val = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		rgb_val = color[i];
+    22f6:	41 91       	ld	r20, Z+
+    22f8:	50 e0       	ldi	r21, 0x00	; 0
+		
+		for (int j = 0; j < 8; j++)
+    22fa:	80 e0       	ldi	r24, 0x00	; 0
+    22fc:	90 e0       	ldi	r25, 0x00	; 0
+		{
+			if (rgb_val << j & 0x80) // send a 1
+    22fe:	9a 01       	movw	r18, r20
+    2300:	08 2e       	mov	r0, r24
+    2302:	02 c0       	rjmp	.+4      	; 0x2308 <main+0x220>
+    2304:	22 0f       	add	r18, r18
+    2306:	33 1f       	adc	r19, r19
+    2308:	0a 94       	dec	r0
+    230a:	e2 f7       	brpl	.-8      	; 0x2304 <main+0x21c>
+    230c:	27 ff       	sbrs	r18, 7
+    230e:	2f c0       	rjmp	.+94     	; 0x236e <main+0x286>
+		bool level)
+{
+	PORT_t *base = arch_ioport_pin_to_base(pin);
+
+	if (level) {
+		base->OUTSET = arch_ioport_pin_to_mask(pin);
+    2310:	d8 01       	movw	r26, r16
+    2312:	15 96       	adiw	r26, 0x05	; 5
+    2314:	9c 92       	st	X, r9
+	...
+	} else {
+		base->OUTCLR = arch_ioport_pin_to_mask(pin);
+    234a:	d8 01       	movw	r26, r16
+    234c:	16 96       	adiw	r26, 0x06	; 6
+    234e:	9c 92       	st	X, r9
+	...
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  ::);
+				ioport_set_pin_low(STRIP_SIGNAL_PIN);
+				asm volatile ("nop\n\t"
+    236c:	2e c0       	rjmp	.+92     	; 0x23ca <main+0x2e2>
+		bool level)
+{
+	PORT_t *base = arch_ioport_pin_to_base(pin);
+
+	if (level) {
+		base->OUTSET = arch_ioport_pin_to_mask(pin);
+    236e:	d8 01       	movw	r26, r16
+    2370:	15 96       	adiw	r26, 0x05	; 5
+    2372:	9c 92       	st	X, r9
+	...
+							  ::);
+			}
+			else // send a 0
+			{
+				ioport_set_pin_high(STRIP_SIGNAL_PIN);
+				asm volatile ("nop\n\t"
+    238c:	00 00       	nop
+	} else {
+		base->OUTCLR = arch_ioport_pin_to_mask(pin);
+    238e:	d8 01       	movw	r26, r16
+    2390:	16 96       	adiw	r26, 0x06	; 6
+    2392:	9c 92       	st	X, r9
+	...
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  ::);
+				ioport_set_pin_low(STRIP_SIGNAL_PIN);
+				asm volatile ("nop\n\t"
+    23c8:	00 00       	nop
+	int rgb_val = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		rgb_val = color[i];
+		
+		for (int j = 0; j < 8; j++)
+    23ca:	01 96       	adiw	r24, 0x01	; 1
+    23cc:	88 30       	cpi	r24, 0x08	; 8
+    23ce:	91 05       	cpc	r25, r1
+    23d0:	09 f0       	breq	.+2      	; 0x23d4 <main+0x2ec>
+    23d2:	95 cf       	rjmp	.-214    	; 0x22fe <main+0x216>
+*/
+
+static void send_color(uint8_t color[])
+{
+	int rgb_val = 0;
+	for (int i = 0; i < 3; i++)
+    23d4:	ec 15       	cp	r30, r12
+    23d6:	fd 05       	cpc	r31, r13
+    23d8:	09 f0       	breq	.+2      	; 0x23dc <main+0x2f4>
+    23da:	8d cf       	rjmp	.-230    	; 0x22f6 <main+0x20e>
+    23dc:	61 50       	subi	r22, 0x01	; 1
+    23de:	71 09       	sbc	r23, r1
+	uint8_t color[3];
+	color[0] = green;
+	color[1] = red;
+	color[2] = blue;
+	
+	for (int i = 0; i < 30; i++)
+    23e0:	61 15       	cp	r22, r1
+    23e2:	71 05       	cpc	r23, r1
+    23e4:	19 f0       	breq	.+6      	; 0x23ec <main+0x304>
+    23e6:	fe 01       	movw	r30, r28
+    23e8:	31 96       	adiw	r30, 0x01	; 1
+    23ea:	85 cf       	rjmp	.-246    	; 0x22f6 <main+0x20e>
+	{
+		send_color(color);
+	}
+	
+	cpu_irq_enable();
+    23ec:	78 94       	sei
+				right_results[i] = right[i];
+				
+			samples_taken = 0;
 			ioport_set_pin_level(TRANSFORMING_LED, true);
+			write_strip(left_results, right_results);
 			cpu_irq_enable();
-    2258:	78 94       	sei
-    225a:	c1 cf       	rjmp	.-126    	; 0x21de <main+0x14c>
-    225c:	e2 e7       	ldi	r30, 0x72	; 114
-    225e:	f1 e2       	ldi	r31, 0x21	; 33
-	static bool right_treble = false;
-
-
-	while(true)
-	{		
-		if (samples_taken == SAMPLE_SIZE)
-    2260:	80 e0       	ldi	r24, 0x00	; 0
-    2262:	90 e0       	ldi	r25, 0x00	; 0
-			int right_mid_sum = 0;
-			int right_treble_sum = 0;
-			
-			//Activate LED when bass is playing on left
-			for (int i = 1; i < BASS_THRESHOLD; i++)
-				left_bass_sum += left_results[i];
-    2264:	21 91       	ld	r18, Z+
-    2266:	31 91       	ld	r19, Z+
-    2268:	82 0f       	add	r24, r18
-    226a:	93 1f       	adc	r25, r19
-			int right_bass_sum = 0;
-			int right_mid_sum = 0;
-			int right_treble_sum = 0;
-			
-			//Activate LED when bass is playing on left
-			for (int i = 1; i < BASS_THRESHOLD; i++)
-    226c:	e6 15       	cp	r30, r6
-    226e:	f7 05       	cpc	r31, r7
-    2270:	c9 f7       	brne	.-14     	; 0x2264 <main+0x1d2>
-				left_bass_sum += left_results[i];
-			if (left_bass_sum > SIGNAL_THRESHOLD)
-    2272:	4a 97       	sbiw	r24, 0x1a	; 26
-    2274:	24 f0       	brlt	.+8      	; 0x227e <main+0x1ec>
-				left_bass = true;
-    2276:	81 e0       	ldi	r24, 0x01	; 1
-    2278:	80 93 6f 20 	sts	0x206F, r24
-    227c:	02 c0       	rjmp	.+4      	; 0x2282 <main+0x1f0>
-			else
-				left_bass = false;
-    227e:	10 92 6f 20 	sts	0x206F, r1
-    2282:	f3 01       	movw	r30, r6
-			cpu_irq_enable();
+    23ee:	78 94       	sei
+    23f0:	f9 ce       	rjmp	.-526    	; 0x21e4 <main+0xfc>
 		}
 		else
 		{
-			int left_bass_sum = 0;
-			int left_mid_sum = 0;
-    2284:	80 e0       	ldi	r24, 0x00	; 0
-    2286:	90 e0       	ldi	r25, 0x00	; 0
-			else
-				left_bass = false;
-				
-			//Activate LED when mid is playing on left
-			for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
-				left_mid_sum += left_results[i];
-    2288:	21 91       	ld	r18, Z+
-    228a:	31 91       	ld	r19, Z+
-    228c:	82 0f       	add	r24, r18
-    228e:	93 1f       	adc	r25, r19
-				left_bass = true;
-			else
-				left_bass = false;
-				
-			//Activate LED when mid is playing on left
-			for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
-    2290:	e8 15       	cp	r30, r8
-    2292:	f9 05       	cpc	r31, r9
-    2294:	c9 f7       	brne	.-14     	; 0x2288 <main+0x1f6>
-				left_mid_sum += left_results[i];
-			if (left_mid_sum > SIGNAL_THRESHOLD)
-    2296:	4a 97       	sbiw	r24, 0x1a	; 26
-    2298:	24 f0       	brlt	.+8      	; 0x22a2 <main+0x210>
-				left_mid = true;
-    229a:	81 e0       	ldi	r24, 0x01	; 1
-    229c:	80 93 6e 20 	sts	0x206E, r24
-    22a0:	02 c0       	rjmp	.+4      	; 0x22a6 <main+0x214>
-			else
-				left_mid = false;
-    22a2:	10 92 6e 20 	sts	0x206E, r1
-    22a6:	f4 01       	movw	r30, r8
-		}
-		else
-		{
-			int left_bass_sum = 0;
-			int left_mid_sum = 0;
-			int left_treble_sum = 0;
-    22a8:	80 e0       	ldi	r24, 0x00	; 0
-    22aa:	90 e0       	ldi	r25, 0x00	; 0
-			else
-				left_mid = false;
-			
-			//Activate LED when treble is playing on left (for now, more like mids. True treble seems to almost never activate)
-			for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
-				left_treble_sum += left_results[i];
-    22ac:	21 91       	ld	r18, Z+
-    22ae:	31 91       	ld	r19, Z+
-    22b0:	82 0f       	add	r24, r18
-    22b2:	93 1f       	adc	r25, r19
-				left_mid = true;
-			else
-				left_mid = false;
-			
-			//Activate LED when treble is playing on left (for now, more like mids. True treble seems to almost never activate)
-			for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
-    22b4:	ee 15       	cp	r30, r14
-    22b6:	ff 05       	cpc	r31, r15
-    22b8:	c9 f7       	brne	.-14     	; 0x22ac <main+0x21a>
-				left_treble_sum += left_results[i];
-			if (left_treble_sum > SIGNAL_THRESHOLD)
-    22ba:	4a 97       	sbiw	r24, 0x1a	; 26
-    22bc:	24 f0       	brlt	.+8      	; 0x22c6 <main+0x234>
-				left_treble = true;
-    22be:	81 e0       	ldi	r24, 0x01	; 1
-    22c0:	80 93 6d 20 	sts	0x206D, r24
-    22c4:	02 c0       	rjmp	.+4      	; 0x22ca <main+0x238>
-			else
-				left_treble = false;
-    22c6:	10 92 6d 20 	sts	0x206D, r1
-    22ca:	e2 e7       	ldi	r30, 0x72	; 114
-    22cc:	f0 e2       	ldi	r31, 0x20	; 32
-		else
-		{
-			int left_bass_sum = 0;
-			int left_mid_sum = 0;
-			int left_treble_sum = 0;
-			int right_bass_sum = 0;
-    22ce:	80 e0       	ldi	r24, 0x00	; 0
-    22d0:	90 e0       	ldi	r25, 0x00	; 0
-			else
-				left_treble = false;
-			
-			//Activate LED when bass is playing on right
-			for (int i = 1; i < BASS_THRESHOLD; i++)
-				right_bass_sum += right_results[i];
-    22d2:	21 91       	ld	r18, Z+
-    22d4:	31 91       	ld	r19, Z+
-    22d6:	82 0f       	add	r24, r18
-    22d8:	93 1f       	adc	r25, r19
-				left_treble = true;
-			else
-				left_treble = false;
-			
-			//Activate LED when bass is playing on right
-			for (int i = 1; i < BASS_THRESHOLD; i++)
-    22da:	e4 15       	cp	r30, r4
-    22dc:	f5 05       	cpc	r31, r5
-    22de:	c9 f7       	brne	.-14     	; 0x22d2 <main+0x240>
-				right_bass_sum += right_results[i];
-			if (right_bass_sum > SIGNAL_THRESHOLD)
-    22e0:	4a 97       	sbiw	r24, 0x1a	; 26
-    22e2:	24 f0       	brlt	.+8      	; 0x22ec <main+0x25a>
-				right_bass = true;
-    22e4:	81 e0       	ldi	r24, 0x01	; 1
-    22e6:	80 93 6c 20 	sts	0x206C, r24
-    22ea:	02 c0       	rjmp	.+4      	; 0x22f0 <main+0x25e>
-			else
-				right_bass = false;
-    22ec:	10 92 6c 20 	sts	0x206C, r1
-    22f0:	f2 01       	movw	r30, r4
-		{
-			int left_bass_sum = 0;
-			int left_mid_sum = 0;
-			int left_treble_sum = 0;
-			int right_bass_sum = 0;
-			int right_mid_sum = 0;
-    22f2:	80 e0       	ldi	r24, 0x00	; 0
-    22f4:	90 e0       	ldi	r25, 0x00	; 0
-			else
-				right_bass = false;
-				
-			//Activate LED when mid is playing on right
-			for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
-				right_mid_sum += right_results[i];
-    22f6:	21 91       	ld	r18, Z+
-    22f8:	31 91       	ld	r19, Z+
-    22fa:	82 0f       	add	r24, r18
-    22fc:	93 1f       	adc	r25, r19
-				right_bass = true;
-			else
-				right_bass = false;
-				
-			//Activate LED when mid is playing on right
-			for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
-    22fe:	ea 15       	cp	r30, r10
-    2300:	fb 05       	cpc	r31, r11
-    2302:	c9 f7       	brne	.-14     	; 0x22f6 <main+0x264>
-				right_mid_sum += right_results[i];
-			if (right_mid_sum > SIGNAL_THRESHOLD)
-    2304:	4a 97       	sbiw	r24, 0x1a	; 26
-    2306:	24 f0       	brlt	.+8      	; 0x2310 <main+0x27e>
-				right_mid = true;
-    2308:	81 e0       	ldi	r24, 0x01	; 1
-    230a:	80 93 6b 20 	sts	0x206B, r24
-    230e:	02 c0       	rjmp	.+4      	; 0x2314 <main+0x282>
-			else
-				right_mid = false;
-    2310:	10 92 6b 20 	sts	0x206B, r1
-    2314:	f5 01       	movw	r30, r10
-			int left_bass_sum = 0;
-			int left_mid_sum = 0;
-			int left_treble_sum = 0;
-			int right_bass_sum = 0;
-			int right_mid_sum = 0;
-			int right_treble_sum = 0;
-    2316:	80 e0       	ldi	r24, 0x00	; 0
-    2318:	90 e0       	ldi	r25, 0x00	; 0
-			else
-				right_mid = false;
-				
-			//Activate LED when treble is playing on right (for now, more like mids. True treble seems to almost never activate)
-			for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
-				right_treble_sum += right_results[i];
-    231a:	21 91       	ld	r18, Z+
-    231c:	31 91       	ld	r19, Z+
-    231e:	82 0f       	add	r24, r18
-    2320:	93 1f       	adc	r25, r19
-				right_mid = true;
-			else
-				right_mid = false;
-				
-			//Activate LED when treble is playing on right (for now, more like mids. True treble seems to almost never activate)
-			for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
-    2322:	e0 17       	cp	r30, r16
-    2324:	f1 07       	cpc	r31, r17
-    2326:	c9 f7       	brne	.-14     	; 0x231a <main+0x288>
-				right_treble_sum += right_results[i];
-			if (right_treble_sum > SIGNAL_THRESHOLD)
-    2328:	4a 97       	sbiw	r24, 0x1a	; 26
-    232a:	24 f0       	brlt	.+8      	; 0x2334 <main+0x2a2>
-				right_treble = true;
-    232c:	81 e0       	ldi	r24, 0x01	; 1
-    232e:	80 93 6a 20 	sts	0x206A, r24
-    2332:	02 c0       	rjmp	.+4      	; 0x2338 <main+0x2a6>
-			else
-				right_treble = false;
-    2334:	10 92 6a 20 	sts	0x206A, r1
-__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
-		bool level)
-{
-	PORT_t *base = arch_ioport_pin_to_base(pin);
+			delay_approx_us(1);
+    23f2:	81 e0       	ldi	r24, 0x01	; 1
+    23f4:	90 e0       	ldi	r25, 0x00	; 0
+    23f6:	2e de       	rcall	.-932    	; 0x2054 <delay_approx_us>
+    23f8:	f5 ce       	rjmp	.-534    	; 0x21e4 <main+0xfc>
 
-	if (level) {
-    2338:	80 91 6f 20 	lds	r24, 0x206F
-    233c:	88 23       	and	r24, r24
-    233e:	21 f0       	breq	.+8      	; 0x2348 <main+0x2b6>
-		base->OUTSET = arch_ioport_pin_to_mask(pin);
-    2340:	80 e8       	ldi	r24, 0x80	; 128
-    2342:	f1 01       	movw	r30, r2
-    2344:	85 83       	std	Z+5, r24	; 0x05
-    2346:	03 c0       	rjmp	.+6      	; 0x234e <main+0x2bc>
-	} else {
-		base->OUTCLR = arch_ioport_pin_to_mask(pin);
-    2348:	80 e8       	ldi	r24, 0x80	; 128
-    234a:	f1 01       	movw	r30, r2
-    234c:	86 83       	std	Z+6, r24	; 0x06
-__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
-		bool level)
-{
-	PORT_t *base = arch_ioport_pin_to_base(pin);
+000023fa <__mulsi3>:
+    23fa:	db 01       	movw	r26, r22
+    23fc:	8f 93       	push	r24
+    23fe:	9f 93       	push	r25
+    2400:	26 d0       	rcall	.+76     	; 0x244e <__muluhisi3>
+    2402:	bf 91       	pop	r27
+    2404:	af 91       	pop	r26
+    2406:	a2 9f       	mul	r26, r18
+    2408:	80 0d       	add	r24, r0
+    240a:	91 1d       	adc	r25, r1
+    240c:	a3 9f       	mul	r26, r19
+    240e:	90 0d       	add	r25, r0
+    2410:	b2 9f       	mul	r27, r18
+    2412:	90 0d       	add	r25, r0
+    2414:	11 24       	eor	r1, r1
+    2416:	08 95       	ret
 
-	if (level) {
-    234e:	80 91 6e 20 	lds	r24, 0x206E
-    2352:	88 23       	and	r24, r24
-    2354:	21 f0       	breq	.+8      	; 0x235e <main+0x2cc>
-		base->OUTSET = arch_ioport_pin_to_mask(pin);
-    2356:	80 e4       	ldi	r24, 0x40	; 64
-    2358:	f1 01       	movw	r30, r2
-    235a:	85 83       	std	Z+5, r24	; 0x05
-    235c:	03 c0       	rjmp	.+6      	; 0x2364 <main+0x2d2>
-	} else {
-		base->OUTCLR = arch_ioport_pin_to_mask(pin);
-    235e:	80 e4       	ldi	r24, 0x40	; 64
-    2360:	f1 01       	movw	r30, r2
-    2362:	86 83       	std	Z+6, r24	; 0x06
-__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
-		bool level)
-{
-	PORT_t *base = arch_ioport_pin_to_base(pin);
+00002418 <__mulhisi3>:
+    2418:	05 d0       	rcall	.+10     	; 0x2424 <__umulhisi3>
+    241a:	33 23       	and	r19, r19
+    241c:	12 f4       	brpl	.+4      	; 0x2422 <__mulhisi3+0xa>
+    241e:	8a 1b       	sub	r24, r26
+    2420:	9b 0b       	sbc	r25, r27
+    2422:	10 c0       	rjmp	.+32     	; 0x2444 <__usmulhisi3_tail>
 
-	if (level) {
-    2364:	80 91 6d 20 	lds	r24, 0x206D
-    2368:	88 23       	and	r24, r24
-    236a:	21 f0       	breq	.+8      	; 0x2374 <main+0x2e2>
-		base->OUTSET = arch_ioport_pin_to_mask(pin);
-    236c:	80 e2       	ldi	r24, 0x20	; 32
-    236e:	f1 01       	movw	r30, r2
-    2370:	85 83       	std	Z+5, r24	; 0x05
-    2372:	03 c0       	rjmp	.+6      	; 0x237a <main+0x2e8>
-	} else {
-		base->OUTCLR = arch_ioport_pin_to_mask(pin);
-    2374:	80 e2       	ldi	r24, 0x20	; 32
-    2376:	f1 01       	movw	r30, r2
-    2378:	86 83       	std	Z+6, r24	; 0x06
-__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
-		bool level)
-{
-	PORT_t *base = arch_ioport_pin_to_base(pin);
+00002424 <__umulhisi3>:
+    2424:	a2 9f       	mul	r26, r18
+    2426:	b0 01       	movw	r22, r0
+    2428:	b3 9f       	mul	r27, r19
+    242a:	c0 01       	movw	r24, r0
+    242c:	a3 9f       	mul	r26, r19
+    242e:	70 0d       	add	r23, r0
+    2430:	81 1d       	adc	r24, r1
+    2432:	11 24       	eor	r1, r1
+    2434:	91 1d       	adc	r25, r1
+    2436:	b2 9f       	mul	r27, r18
+    2438:	70 0d       	add	r23, r0
+    243a:	81 1d       	adc	r24, r1
+    243c:	11 24       	eor	r1, r1
+    243e:	91 1d       	adc	r25, r1
+    2440:	08 95       	ret
 
-	if (level) {
-    237a:	80 91 6c 20 	lds	r24, 0x206C
-    237e:	88 23       	and	r24, r24
-    2380:	21 f0       	breq	.+8      	; 0x238a <main+0x2f8>
-		base->OUTSET = arch_ioport_pin_to_mask(pin);
-    2382:	80 e1       	ldi	r24, 0x10	; 16
-    2384:	f1 01       	movw	r30, r2
-    2386:	85 83       	std	Z+5, r24	; 0x05
-    2388:	03 c0       	rjmp	.+6      	; 0x2390 <main+0x2fe>
-	} else {
-		base->OUTCLR = arch_ioport_pin_to_mask(pin);
-    238a:	80 e1       	ldi	r24, 0x10	; 16
-    238c:	f1 01       	movw	r30, r2
-    238e:	86 83       	std	Z+6, r24	; 0x06
-__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
-		bool level)
-{
-	PORT_t *base = arch_ioport_pin_to_base(pin);
+00002442 <__usmulhisi3>:
+    2442:	f0 df       	rcall	.-32     	; 0x2424 <__umulhisi3>
 
-	if (level) {
-    2390:	80 91 6b 20 	lds	r24, 0x206B
-    2394:	88 23       	and	r24, r24
-    2396:	21 f0       	breq	.+8      	; 0x23a0 <main+0x30e>
-		base->OUTSET = arch_ioport_pin_to_mask(pin);
-    2398:	88 e0       	ldi	r24, 0x08	; 8
-    239a:	f1 01       	movw	r30, r2
-    239c:	85 83       	std	Z+5, r24	; 0x05
-    239e:	03 c0       	rjmp	.+6      	; 0x23a6 <main+0x314>
-	} else {
-		base->OUTCLR = arch_ioport_pin_to_mask(pin);
-    23a0:	88 e0       	ldi	r24, 0x08	; 8
-    23a2:	f1 01       	movw	r30, r2
-    23a4:	86 83       	std	Z+6, r24	; 0x06
-__always_inline static void arch_ioport_set_pin_level(ioport_pin_t pin,
-		bool level)
-{
-	PORT_t *base = arch_ioport_pin_to_base(pin);
+00002444 <__usmulhisi3_tail>:
+    2444:	b7 ff       	sbrs	r27, 7
+    2446:	08 95       	ret
+    2448:	82 1b       	sub	r24, r18
+    244a:	93 0b       	sbc	r25, r19
+    244c:	08 95       	ret
 
-	if (level) {
-    23a6:	80 91 6a 20 	lds	r24, 0x206A
-    23aa:	88 23       	and	r24, r24
-    23ac:	21 f0       	breq	.+8      	; 0x23b6 <main+0x324>
-		base->OUTSET = arch_ioport_pin_to_mask(pin);
-    23ae:	84 e0       	ldi	r24, 0x04	; 4
-    23b0:	f1 01       	movw	r30, r2
-    23b2:	85 83       	std	Z+5, r24	; 0x05
-    23b4:	14 cf       	rjmp	.-472    	; 0x21de <main+0x14c>
-	} else {
-		base->OUTCLR = arch_ioport_pin_to_mask(pin);
-    23b6:	84 e0       	ldi	r24, 0x04	; 4
-    23b8:	f1 01       	movw	r30, r2
-    23ba:	86 83       	std	Z+6, r24	; 0x06
-    23bc:	10 cf       	rjmp	.-480    	; 0x21de <main+0x14c>
+0000244e <__muluhisi3>:
+    244e:	ea df       	rcall	.-44     	; 0x2424 <__umulhisi3>
+    2450:	a5 9f       	mul	r26, r21
+    2452:	90 0d       	add	r25, r0
+    2454:	b4 9f       	mul	r27, r20
+    2456:	90 0d       	add	r25, r0
+    2458:	a4 9f       	mul	r26, r20
+    245a:	80 0d       	add	r24, r0
+    245c:	91 1d       	adc	r25, r1
+    245e:	11 24       	eor	r1, r1
+    2460:	08 95       	ret
 
-000023be <__mulsi3>:
-    23be:	db 01       	movw	r26, r22
-    23c0:	8f 93       	push	r24
-    23c2:	9f 93       	push	r25
-    23c4:	26 d0       	rcall	.+76     	; 0x2412 <__muluhisi3>
-    23c6:	bf 91       	pop	r27
-    23c8:	af 91       	pop	r26
-    23ca:	a2 9f       	mul	r26, r18
-    23cc:	80 0d       	add	r24, r0
-    23ce:	91 1d       	adc	r25, r1
-    23d0:	a3 9f       	mul	r26, r19
-    23d2:	90 0d       	add	r25, r0
-    23d4:	b2 9f       	mul	r27, r18
-    23d6:	90 0d       	add	r25, r0
-    23d8:	11 24       	eor	r1, r1
-    23da:	08 95       	ret
+00002462 <_exit>:
+    2462:	f8 94       	cli
 
-000023dc <__mulhisi3>:
-    23dc:	05 d0       	rcall	.+10     	; 0x23e8 <__umulhisi3>
-    23de:	33 23       	and	r19, r19
-    23e0:	12 f4       	brpl	.+4      	; 0x23e6 <__mulhisi3+0xa>
-    23e2:	8a 1b       	sub	r24, r26
-    23e4:	9b 0b       	sbc	r25, r27
-    23e6:	10 c0       	rjmp	.+32     	; 0x2408 <__usmulhisi3_tail>
-
-000023e8 <__umulhisi3>:
-    23e8:	a2 9f       	mul	r26, r18
-    23ea:	b0 01       	movw	r22, r0
-    23ec:	b3 9f       	mul	r27, r19
-    23ee:	c0 01       	movw	r24, r0
-    23f0:	a3 9f       	mul	r26, r19
-    23f2:	70 0d       	add	r23, r0
-    23f4:	81 1d       	adc	r24, r1
-    23f6:	11 24       	eor	r1, r1
-    23f8:	91 1d       	adc	r25, r1
-    23fa:	b2 9f       	mul	r27, r18
-    23fc:	70 0d       	add	r23, r0
-    23fe:	81 1d       	adc	r24, r1
-    2400:	11 24       	eor	r1, r1
-    2402:	91 1d       	adc	r25, r1
-    2404:	08 95       	ret
-
-00002406 <__usmulhisi3>:
-    2406:	f0 df       	rcall	.-32     	; 0x23e8 <__umulhisi3>
-
-00002408 <__usmulhisi3_tail>:
-    2408:	b7 ff       	sbrs	r27, 7
-    240a:	08 95       	ret
-    240c:	82 1b       	sub	r24, r18
-    240e:	93 0b       	sbc	r25, r19
-    2410:	08 95       	ret
-
-00002412 <__muluhisi3>:
-    2412:	ea df       	rcall	.-44     	; 0x23e8 <__umulhisi3>
-    2414:	a5 9f       	mul	r26, r21
-    2416:	90 0d       	add	r25, r0
-    2418:	b4 9f       	mul	r27, r20
-    241a:	90 0d       	add	r25, r0
-    241c:	a4 9f       	mul	r26, r20
-    241e:	80 0d       	add	r24, r0
-    2420:	91 1d       	adc	r25, r1
-    2422:	11 24       	eor	r1, r1
-    2424:	08 95       	ret
-
-00002426 <_exit>:
-    2426:	f8 94       	cli
-
-00002428 <__stop_program>:
-    2428:	ff cf       	rjmp	.-2      	; 0x2428 <__stop_program>
+00002464 <__stop_program>:
+    2464:	ff cf       	rjmp	.-2      	; 0x2464 <__stop_program>

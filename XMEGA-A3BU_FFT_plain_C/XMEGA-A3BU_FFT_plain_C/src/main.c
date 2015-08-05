@@ -5,20 +5,31 @@
 #define LEFT_AUDIO_IN_CHANNEL ADC_CH0
 #define RIGHT_AUDIO_IN_CHANNEL ADC_CH1
 #define SAMPLE_SIZE 256
+/*
 #define LEFT_BASS_LED IOPORT_CREATE_PIN(PORTC, 7)
 #define LEFT_MID_LED IOPORT_CREATE_PIN(PORTC, 6)
 #define LEFT_TREBLE_LED IOPORT_CREATE_PIN(PORTC, 5)
 #define RIGHT_BASS_LED IOPORT_CREATE_PIN(PORTC, 4)
 #define RIGHT_MID_LED IOPORT_CREATE_PIN(PORTC, 3)
 #define RIGHT_TREBLE_LED IOPORT_CREATE_PIN(PORTC, 2)
+*/
 #define TRANSFORMING_LED IOPORT_CREATE_PIN(PORTR, 1)
 #define BASS_THRESHOLD 6 //about 250Hz
 #define TREBLE_THRESHOLD 25 //about 1000Hz
 #define SIGNAL_THRESHOLD 25
-#define GAIN 64
+#define GAIN 32 //options are 0 (0.5x), 1, 2, 4, 8, 16, 32, or 64
+#define STRIP_SIGNAL_PIN IOPORT_CREATE_PIN(PORTE, 0)
 
 static void adc_init(void);
 static void take_sample(void);
+static void write_strip(int16_t left_results[], int16_t right_results[]);
+static void delay_approx_us(uint16_t us);
+/*
+static void send_blue();
+static void send_red();
+static void send_green();
+*/
+static void send_color(uint8_t color[]);
 
 //hack! I think these should be inside main, but I cannot figure out how to pass them to take_sample(), so I just stuck them here for now
 static int16_t left[SAMPLE_SIZE];
@@ -44,23 +55,27 @@ int main (void)
 	cpu_irq_enable();
 	tc_write_clock_source(&TCC0, TC_CLKSEL_DIV1_gc);
 	
+	/*
 	ioport_set_pin_dir(LEFT_BASS_LED, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LEFT_MID_LED, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(LEFT_TREBLE_LED, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(RIGHT_BASS_LED, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(RIGHT_MID_LED, IOPORT_DIR_OUTPUT);
 	ioport_set_pin_dir(RIGHT_TREBLE_LED, IOPORT_DIR_OUTPUT);
+	*/
 	ioport_set_pin_dir(TRANSFORMING_LED, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(STRIP_SIGNAL_PIN, IOPORT_DIR_OUTPUT);
 	
 	static int16_t left_results[SAMPLE_SIZE / 2];
 	static int16_t right_results[SAMPLE_SIZE / 2];
+	/*
 	static bool left_bass = false;
 	static bool left_mid = false;
 	static bool left_treble = false;
 	static bool right_bass = false;
 	static bool right_mid = false;
 	static bool right_treble = false;
-
+	*/
 
 	while(true)
 	{		
@@ -83,10 +98,13 @@ int main (void)
 				
 			samples_taken = 0;
 			ioport_set_pin_level(TRANSFORMING_LED, true);
+			write_strip(left_results, right_results);
 			cpu_irq_enable();
 		}
 		else
 		{
+			delay_approx_us(1);
+			/*
 			int left_bass_sum = 0;
 			int left_mid_sum = 0;
 			int left_treble_sum = 0;
@@ -152,11 +170,536 @@ int main (void)
 			ioport_set_pin_level(RIGHT_BASS_LED, right_bass);
 			ioport_set_pin_level(RIGHT_MID_LED, right_mid);
 			ioport_set_pin_level(RIGHT_TREBLE_LED, right_treble);
+			*/
 		}
 	}
 }
 
-//hack! I am using static variables defined outside of main, which seems very sketchy, but I could not figure out how to pass argumets to this function, so I just did that...
+static void delay_approx_us(uint16_t us)
+{
+	while(us--)
+	{
+		asm volatile ("nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  "nop\n\t"
+					  ::);
+	}
+}
+
+/*
+static void send_red()
+{
+	for (int j = 0; j < 8; j++)
+		{
+			ioport_set_pin_high(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+			ioport_set_pin_low(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+		}
+		for (int j = 0; j < 8; j++)
+		{
+			ioport_set_pin_high(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+			ioport_set_pin_low(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+		}
+		for (int j = 0; j < 8; j++)
+		{
+			ioport_set_pin_high(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+			ioport_set_pin_low(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+		}
+}
+*/
+
+/*
+static void send_blue()
+{
+	for (int j = 0; j < 16; j++)
+		{
+			ioport_set_pin_high(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+			ioport_set_pin_low(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+		}
+		for (int j = 0; j < 8; j++)
+		{
+			ioport_set_pin_high(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+			ioport_set_pin_low(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+		}
+}
+*/
+
+/*
+static void send_green()
+{
+		for (int j = 0; j < 8; j++)
+		{
+			ioport_set_pin_high(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+			ioport_set_pin_low(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+		}
+		for (int j = 0; j < 16; j++)
+		{
+			ioport_set_pin_high(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+			ioport_set_pin_low(STRIP_SIGNAL_PIN);
+			asm volatile ("nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  "nop\n\t"
+						  ::);
+		}
+}
+*/
+
+static void send_color(uint8_t color[])
+{
+	int rgb_val = 0;
+	for (int i = 0; i < 3; i++)
+	{
+		rgb_val = color[i];
+		
+		for (int j = 0; j < 8; j++)
+		{
+			if (rgb_val << j & 0x80) // send a 1
+			{
+				ioport_set_pin_high(STRIP_SIGNAL_PIN);
+				asm volatile ("nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  ::);
+				ioport_set_pin_low(STRIP_SIGNAL_PIN);
+				asm volatile ("nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  ::);
+			}
+			else // send a 0
+			{
+				ioport_set_pin_high(STRIP_SIGNAL_PIN);
+				asm volatile ("nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  ::);
+				ioport_set_pin_low(STRIP_SIGNAL_PIN);
+				asm volatile ("nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  "nop\n\t"
+							  ::);
+			}
+		}
+	}
+}
+
+static void write_strip(int16_t left_results[], int16_t right_results[])
+{
+	cpu_irq_disable();
+	
+	uint16_t treble = 0, bass = 0, mid = 0;
+	for (int i = TREBLE_THRESHOLD; i < SAMPLE_SIZE / 2; i++)
+		treble += left_results[i] + right_results[i];
+	for (int i = 0; i < BASS_THRESHOLD; i++)
+		bass += left_results[i] + right_results[i];
+	for (int i = BASS_THRESHOLD; i < TREBLE_THRESHOLD; i++)
+		mid += left_results[i] + right_results[i];
+		
+	uint8_t green = treble >> 0, red = bass >> 1, blue = mid >> 1;
+	
+	ioport_set_pin_low(STRIP_SIGNAL_PIN);
+	delay_approx_us(50);
+	
+	uint8_t color[3];
+	color[0] = green;
+	color[1] = red;
+	color[2] = blue;
+	
+	for (int i = 0; i < 30; i++)
+	{
+		send_color(color);
+	}
+	
+	cpu_irq_enable();
+}
+
+//hack! I am using static variables defined outside of main, which seems very sketchy, but I could not figure out how to pass arguments to this function, so I just did that...
 static void take_sample(void)
 {
 	left[samples_taken] = adc_get_result(&AUDIO_IN, LEFT_AUDIO_IN_CHANNEL);
